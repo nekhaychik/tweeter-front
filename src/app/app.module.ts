@@ -20,6 +20,7 @@ import { SvgImageComponent } from './svg-image/svg-image.component';
 import { MainComponent } from './main/main.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ButtonComponent } from './button/button.component';
+import { TweetsMenuComponent } from './tweets-menu/tweets-menu.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ButtonComponent } from './button/button.component';
     MainComponent,
     UserInfoComponent,
     ButtonComponent,
+    TweetsMenuComponent,
   ],
   imports: [
     BrowserModule,
