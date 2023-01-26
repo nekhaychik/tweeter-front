@@ -1,0 +1,21 @@
+<header>
+  <div class="wrapper">
+    <div class="logo-container">
+      <!-- <img class="logo-image" src="../../assets/tweeter-log.svg" alt="Logo"> -->
+      <p class="logo-text">Tweeter</p>
+    </div>
+    <div class="navigation-container">
+      <tui-tabs-with-more class="tabs" [activeItemIndex]="activeItemIndex">
+        <ng-container *ngFor="let tab of tabs">
+          <button *tuiItem tuiTab (click)="onClick(tab)">
+            {{ tab }}
+          </button>
+        </ng-container>
+      </tui-tabs-with-more>
+    </div>
+    <div class="avatar-container">
+      <app-avatar></app-avatar>
+      <p>{{ user.name }}</p>
+    </div>
+  </div>
+</header>
