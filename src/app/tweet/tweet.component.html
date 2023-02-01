@@ -1,0 +1,25 @@
+<div class="tweet__wrapper">
+  <div class="tweet__user-info">
+    <app-avatar class="tweet__user-avatar" [size]="avatarSize"></app-avatar>
+    <p class="tweet__user-name">User Name</p>
+    <p class="tweet__created-date">21 11 2021</p>
+  </div>
+  <div class="tweet__text">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit animi, laudantium amet ipsum illo mollitia
+      necessitatibus architecto quo beatae hic sequi vel unde eius possimus error quas ullam. Quidem, repudiandae.
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat recusandae reiciendis, ea fugit qui libero nisi
+      ullam eveniet incidunt! Dolores non incidunt at nulla fuga! Soluta aliquid similique eaque esse.</p>
+  </div>
+  <div class="tweet__image-wrapper">
+    <img class="tweet__image" src="../../assets/main-background.jpg" alt="">
+  </div>
+  <div class="tweet__info">
+    <p>1 comments</p>
+    <p>1 retweet</p>
+    <p>1 saved</p>
+  </div>
+  <div class="tweet__buttons">
+    <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
+      *ngFor="let button of tweetButtons" [text]="button"></app-button>
+  </div>
+</div>

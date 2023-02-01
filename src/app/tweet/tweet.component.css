@@ -1,0 +1,94 @@
+.tweet__wrapper {
+  width: 745px;
+  padding: 20px;
+  height: fit-content;
+  background: white;
+  border-radius: 8px;
+}
+
+.tweet__user-info {
+  display: grid;
+  column-gap: 17.51px;
+  width: fit-content;
+  margin-bottom: 21px;
+}
+
+.tweet__user-avatar {
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.tweet__user-name,
+.tweet__created-date {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.tweet__user-name {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.035em;
+  color: #000000;
+}
+
+.tweet__created-date {
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.035em;
+  color: #bdbdbd;
+}
+
+.tweet__text {
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.035em;
+  color: #4f4f4f;
+}
+
+.tweet__image-wrapper {
+  width: 100%;
+  margin-top: 19px;
+  height: fit-content;
+}
+
+.tweet__image {
+  position: relative;
+  width: 100%;
+}
+
+.tweet__info {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 16px;
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.035em;
+  color: #bdbdbd;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.tweet__buttons {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.tweet__button {
+  width: 164px;
+  justify-self: center;
+  align-self: center;
+}

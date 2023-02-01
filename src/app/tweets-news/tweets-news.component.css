@@ -1,0 +1,6 @@
+.tweets__news {
+  display: flex;
+  flex-direction: column;
+  row-gap: 35.24px;
+  margin-bottom: 96.36px;
+}
