@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 100px;
+  height: 100%;
+  background: url("../../../../assets/auth-background.jpg");
+}
+
+.register {
+  margin-bottom: 20px;
+}
+
+.form__wrapper {
+  min-width: 33em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+mat-card {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+mat-form-field {
+  width: 100%;
+  min-width: 300px;
+}
+
+mat-card-title {
+  margin-top: 20px;
+  align-self: center;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: -0.035em;
+  color: #333333;
+}
+
+mat-card,
+form {
+  row-gap: 20px;
+}
+
+mat-error {
+  font-size: small;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button:disabled {
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
