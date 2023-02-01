@@ -2,6 +2,16 @@
   box-sizing: border-box;
 }
 
+p {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  font-family: Roboto, "Poppins", sans-serif;
 }
