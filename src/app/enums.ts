@@ -11,6 +11,6 @@ export enum ButtonSize {
 }
 
 export enum ButtonAppearance {
- primary = 'primary',
-
+  primary = 'primary',
+  mono = 'mono',
 }

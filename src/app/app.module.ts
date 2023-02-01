@@ -3,6 +3,7 @@ import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { TuiAvatarModule } from '@taiga-ui/kit';
 import { TuiTabsModule } from '@taiga-ui/kit';
@@ -21,6 +22,15 @@ import { MainComponent } from './main/main.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { ButtonComponent } from './button/button.component';
 import { TweetsMenuComponent } from './tweets-menu/tweets-menu.component';
+import { TweetsNewsComponent } from './tweets-news/tweets-news.component';
+import { TweetComponent } from './tweet/tweet.component';
+
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('nestjs_chat_app');
+}
 
 @NgModule({
   declarations: [
@@ -33,11 +43,14 @@ import { TweetsMenuComponent } from './tweets-menu/tweets-menu.component';
     UserInfoComponent,
     ButtonComponent,
     TweetsMenuComponent,
+    TweetsNewsComponent,
+    TweetComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     TuiRootModule,
     TuiDialogModule,
     TuiAlertModule,
@@ -47,8 +60,17 @@ import { TweetsMenuComponent } from './tweets-menu/tweets-menu.component';
     TuiDataListModule,
     TuiSvgModule,
     TuiButtonModule,
+    MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:3000'],
+      },
+    }),
   ],
-  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
+  providers: [
+    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
