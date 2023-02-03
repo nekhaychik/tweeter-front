@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Size } from '../enums';
+import { Size } from '../../enums/enums';
 
 @Component({
   selector: 'app-avatar',

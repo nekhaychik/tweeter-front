@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ButtonAppearance, ButtonSize } from '../enums';
+import { ButtonAppearance, ButtonSize } from '../../enums/enums';
 
 @Component({
   selector: 'app-button',

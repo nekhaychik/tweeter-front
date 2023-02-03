@@ -1,73 +1,29 @@
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
-import {
-  TuiRootModule,
-  TuiDialogModule,
-  TuiAlertModule,
-  TUI_SANITIZER,
-} from '@taiga-ui/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
-import { TuiAvatarModule } from '@taiga-ui/kit';
-import { TuiTabsModule } from '@taiga-ui/kit';
-import { TuiHostedDropdownModule } from '@taiga-ui/core';
-import { TuiDataListModule } from '@taiga-ui/core';
-import { TuiSvgModule } from '@taiga-ui/core';
-import { TuiButtonModule } from '@taiga-ui/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { LogoComponent } from './logo/logo.component';
-import { AvatarComponent } from './avatar/avatar.component';
-import { SvgImageComponent } from './svg-image/svg-image.component';
-import { MainComponent } from './main/main.component';
-import { UserInfoComponent } from './user-info/user-info.component';
-import { ButtonComponent } from './button/button.component';
-import { TweetsMenuComponent } from './tweets-menu/tweets-menu.component';
-import { TweetsNewsComponent } from './tweets-news/tweets-news.component';
-import { TweetComponent } from './tweet/tweet.component';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_FIELD } from './public/constants/constants';
-import { UserPageComponent } from './user-page/user-page.component';
+import { TUI_SANITIZER } from '@taiga-ui/core';
+import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_FIELD);
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    LogoComponent,
-    AvatarComponent,
-    SvgImageComponent,
-    MainComponent,
-    UserInfoComponent,
-    ButtonComponent,
-    TweetsMenuComponent,
-    TweetsNewsComponent,
-    TweetComponent,
-    UserPageComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    TuiRootModule,
-    TuiDialogModule,
-    TuiAlertModule,
-    TuiAvatarModule,
-    TuiTabsModule,
-    TuiHostedDropdownModule,
-    TuiDataListModule,
-    TuiSvgModule,
-    TuiButtonModule,
     MatSnackBarModule,
     JwtModule.forRoot({
       config: {

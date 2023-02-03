@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Size } from './enums';
+import { Size } from './private/enums/enums';
 
 @Component({
   selector: 'app-root',

@@ -11,6 +11,7 @@ import { LoginControls } from 'src/app/model/control.interface';
 
 // Constants
 import { PASSWORD_MIN_LENGTH } from '../../constants/constants';
+import { User } from 'src/app/model/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,13 @@ export class LoginComponent implements OnInit {
         })
         .pipe(
           switchMap(() => this.authService.user$),
-          tap(() => this.router.navigate([`./private`])))
+          tap((user: User | null) => {
+            console.log(user)
+            if (user) {
+              this.router.navigate([`./private/${user._id}`]);
+            }
+          })
+        )
         .subscribe();
     }
   }
