@@ -36,7 +36,7 @@ export interface UpdateUser {
   description?: string;
 }
 
-export interface Subscription {
+export interface SubscriptionI {
   userId: string;
   subscriberId: string;
 }

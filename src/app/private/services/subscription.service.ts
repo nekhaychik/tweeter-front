@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
-import { Subscription } from 'src/app/model/user.interface';
+import { SubscriptionI } from 'src/app/model/user.interface';
 import { API } from 'src/app/public/constants/constants';
 
 @Injectable({
@@ -12,26 +12,26 @@ export class SubscriptionService {
 
   public constructor(private http: HttpClient) {}
 
-  public getAllUserSubscriptions(userId: string): Observable<Subscription[]> {
+  public getAllUserSubscriptions(userId: string): Observable<SubscriptionI[]> {
     const url: string =
       API + this.subscriptionUrl + `/get-subscriptions?userId=${userId}`;
     return this.http
-      .get<Subscription[]>(url)
+      .get<SubscriptionI[]>(url)
       .pipe(
         catchError(
-          this.handleError<Subscription[]>('getAllUserSubscriptions', [])
+          this.handleError<SubscriptionI[]>('getAllUserSubscriptions', [])
         )
       );
   }
 
-  public getAllUserSubscribers(userId: string): Observable<Subscription[]> {
+  public getAllUserSubscribers(userId: string): Observable<SubscriptionI[]> {
     const url: string =
       API + this.subscriptionUrl + `/get-subscribers?userId=${userId}`;
     return this.http
-      .get<Subscription[]>(url)
+      .get<SubscriptionI[]>(url)
       .pipe(
         catchError(
-          this.handleError<Subscription[]>('getAllUserSubscribers', [])
+          this.handleError<SubscriptionI[]>('getAllUserSubscribers', [])
         )
       );
   }

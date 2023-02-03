@@ -7,7 +7,6 @@
   padding: 19.63px 24px 0;
   background-color: white;
   border-radius: 0.75em;
-
 }
 
 .information__avatar {
@@ -25,7 +24,7 @@
 }
 
 .information__user-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -36,7 +35,7 @@
 
 .information__user-following,
 .information__user-followers {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 200;
   font-size: 12px;
@@ -49,7 +48,7 @@
 .information__user-description {
   grid-column-start: 1;
   grid-column-end: 4;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
