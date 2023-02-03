@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, of } from 'rxjs';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 // Interfaces
 import { LoginResponse } from 'src/app/model/response.interface';
 import {
+  User,
   UserLogIn,
   UserSignUp,
   UserSignUpVerify,
@@ -24,24 +24,27 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  public constructor(
-    private http: HttpClient,
-    private snackbar: MatSnackBar,
-    private jwtService: JwtHelperService
-  ) {}
+  public user$: ReplaySubject<User | null> = new ReplaySubject<User | null>(1);
+
+  public constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+    this.http
+      .get<User>(`${API}/user/me`)
+      .subscribe((user) => this.user$.next(user));
+  }
 
   public login(user: UserLogIn): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${API}/auth/sign-in`, user).pipe(
       tap((res: LoginResponse) =>
         localStorage.setItem(ACCESS_TOKEN_FIELD, res.data.accessToken)
       ),
-      tap(() =>
+      tap(() => {
+        this.http.get<User>(`${API}/user/me`).subscribe((user) => this.user$.next(user));
         this.snackbar.open('Login Successfull', 'Close', {
           duration: 2000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
-        })
-      )
+        });
+      }),
     );
   }
 

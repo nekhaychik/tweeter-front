@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 // Services
 import { AuthService } from '../../services/auth-service/auth.service';
@@ -54,7 +54,9 @@ export class LoginComponent implements OnInit {
           email: this.email.value,
           password: this.password.value,
         })
-        .pipe(tap(() => this.router.navigate(['./public/sign-up'])))
+        .pipe(
+          switchMap(() => this.authService.user$),
+          tap(() => this.router.navigate([`./private`])))
         .subscribe();
     }
   }
