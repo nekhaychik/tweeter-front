@@ -33,6 +33,7 @@ import { TweetComponent } from './tweet/tweet.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ACCESS_TOKEN_FIELD } from './public/constants/constants';
+import { UserPageComponent } from './user-page/user-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem(ACCESS_TOKEN_FIELD);
@@ -51,6 +52,7 @@ export function tokenGetter() {
     TweetsMenuComponent,
     TweetsNewsComponent,
     TweetComponent,
+    UserPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,20 +1,63 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 import { Size } from '../enums';
+import { Subscription, User } from '../model/user.interface';
+import { AuthService } from '../public/services/auth-service/auth.service';
+import { SubscriptionService } from '../services/subscription.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.css'],
 })
-export class UserInfoComponent {
+export class UserInfoComponent implements OnInit {
   public avatarSize: Size = Size.xxl;
-  public user = {
-    name: 'User Name',
-    email: 'user@email.com',
-    description:
-      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid undeillo, quibusdam beatae esse neque eos eligendi est excepturi quisquam reiciendis ipsum optio nobis numquamrepellat ipsam placeat similique! Nemo.',
-  };
-  public followers: number = 12;
-  public following: number = 12;
   public buttonFollowText: string = 'Follow';
+
+  public user: User | null = null;
+  public isAuthUser!: boolean;
+
+  public followersCount: number = 0;
+  public followingCount: number = 0;
+
+  public constructor(
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private userService: UserService,
+    private subscriptionService: SubscriptionService
+  ) {}
+
+  public ngOnInit(): void {
+    this.route.params.subscribe((params: Params) => {
+      const id: string = params['id'];
+      if (id) {
+        this.getUser(params['id']);
+        this.isAuthUser = false;
+      } else {
+        this.getAuthUser();
+        this.isAuthUser = true;
+      }
+    });
+    // this.subscriptionService.getAllUserSubscriptions().subscribe;
+  }
+
+  public getUser(id: string): void {
+    this.userService.getUserById(id).subscribe((user: User) => {
+      this.user = user;
+    });
+  }
+
+  public getAuthUser(): void {
+    this.authService.user$.subscribe((user: User | null) => (this.user = user));
+  }
+
+  public getFollowers(id: string): void {
+    this.subscriptionService
+      .getAllUserSubscribers(id)
+      .subscribe(
+        (followers: Subscription[]) => (this.followersCount = followers.length)
+      );
+  }
 }

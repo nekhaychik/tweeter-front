@@ -16,6 +16,13 @@ const routes: Routes = [
     //   import('./private/private.module').then((m) => m.PrivateModule),
   },
   {
+    path: 'private/:id',
+    canActivate: [AuthGuard],
+    component: MainComponent,
+    // loadChildren: () =>
+    //   import('./private/private.module').then((m) => m.PrivateModule),
+  },
+  {
     path: 'public',
     loadChildren: () =>
       import('./public/public.module').then((m) => m.PublicModule),

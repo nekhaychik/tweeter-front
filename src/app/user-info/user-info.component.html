@@ -1,13 +1,10 @@
-<section class="information">
-  <app-avatar class="information__avatar" [size]="avatarSize"></app-avatar>
+<section *ngIf="user" class="information">
+  <app-avatar class="information__avatar" [size]="avatarSize" [name]="user.username"></app-avatar>
   <div class="information__wrapper">
-    <div class="information__user-name">{{ user.name }}</div>
-    <div class="information__user-following">{{ following }} following</div>
-    <div class="information__user-followers">{{ followers }} followers</div>
-    <app-button
-      class="button__follow"
-      [text]="buttonFollowText"
-      >
+    <div class="information__user-name">{{ user.username }}</div>
+    <div class="information__user-following">{{ followingCount }} following</div>
+    <div class="information__user-followers">{{ followersCount }} followers</div>
+    <app-button *ngIf="!isAuthUser" class="button__follow" [text]="buttonFollowText">
     </app-button>
     <div class="information__user-description">{{ user.description }}</div>
   </div>
