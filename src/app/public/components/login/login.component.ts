@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 // Services
@@ -18,9 +19,11 @@ import { User } from 'src/app/model/user.interface';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup = new FormGroup({});
   public formControls: typeof LoginControls = LoginControls;
+  public authUser: User | null = null;
+  private subscriptionsList: Subscription[] = [];
 
   public ngOnInit(): void {
     this.loginForm.addControl(
@@ -41,6 +44,12 @@ export class LoginComponent implements OnInit {
         ])
       )
     );
+
+    this.subscriptionsList.push(
+      this.authService.user$.subscribe(
+        (user: User | null) => (this.authUser = user)
+      )
+    );
   }
 
   public constructor(
@@ -50,22 +59,27 @@ export class LoginComponent implements OnInit {
 
   public login(): void {
     if (this.loginForm.valid) {
-      this.authService
-        .login({
-          email: this.email.value,
-          password: this.password.value,
-        })
-        .pipe(
-          switchMap(() => this.authService.user$),
-          tap((user: User | null) => {
-            console.log(user)
-            if (user) {
-              this.router.navigate([`./private/${user._id}`]);
-            }
+      this.subscriptionsList.push(
+        this.authService
+          .login({
+            email: this.email.value,
+            password: this.password.value,
           })
-        )
-        .subscribe();
+          .pipe(
+            switchMap(() => this.authService.user$),
+            tap((user: User | null) => {
+              if (user) {
+                this.router.navigate([`./private/${user._id}`]);
+              }
+            })
+          )
+          .subscribe()
+      );
     }
+  }
+
+  public navigateToMyPage(): void {
+    this.router.navigate([`./private`]);
   }
 
   public get email(): FormControl {
@@ -74,5 +88,11 @@ export class LoginComponent implements OnInit {
 
   public get password(): FormControl {
     return this.loginForm.get(LoginControls.password) as FormControl;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptionsList.forEach((subscription: Subscription) =>
+      subscription.unsubscribe()
+    );
   }
 }

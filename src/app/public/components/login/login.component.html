@@ -33,6 +33,8 @@
             </mat-form-field>
 
             <div class="button">
+              <button *ngIf="authUser" mat-raised-button color="primary" type="button" (click)="navigateToMyPage()">Go
+                to my page</button>
               <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
             </div>
           </form>
