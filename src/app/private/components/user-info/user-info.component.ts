@@ -60,7 +60,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
     this.authService.user$.pipe(
       tap((user: User | null) => {
         if (user) {
-          this.router.navigate([`./private/${user._id}`]);
+          this.router.navigate([`./private/user-page/${user._id}`]);
         }
       })
     );

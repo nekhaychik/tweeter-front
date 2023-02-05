@@ -22,8 +22,13 @@ import {
   TuiSvgModule,
   TUI_SANITIZER,
 } from '@taiga-ui/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { PrivateRoutingModule } from './private-routing.module';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +43,7 @@ import { PrivateRoutingModule } from './private-routing.module';
     TweetsNewsComponent,
     TweetComponent,
     UserPageComponent,
+    HomeComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +57,9 @@ import { PrivateRoutingModule } from './private-routing.module';
     TuiDataListModule,
     TuiSvgModule,
     TuiButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTabsModule,
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
 })

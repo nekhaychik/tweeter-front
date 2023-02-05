@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             switchMap(() => this.authService.user$),
             tap((user: User | null) => {
               if (user) {
-                this.router.navigate([`./private/${user._id}`]);
+                this.router.navigate([`./private/user-page/${user._id}`]);
               }
             })
           )
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public navigateToMyPage(): void {
-    this.router.navigate([`./private`]);
+    this.router.navigate([`./private/user-page`]);
   }
 
   public get email(): FormControl {
