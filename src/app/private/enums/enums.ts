@@ -14,3 +14,8 @@ export enum ButtonAppearance {
   primary = 'primary',
   mono = 'mono',
 }
+
+export enum Route {
+  home = '../private/home',
+  userPage = '../private/user-page',
+}

@@ -1,21 +1,26 @@
-<header>
+<header *ngIf="user">
   <div class="wrapper">
     <div class="logo-container">
       <!-- <img class="logo-image" src="../../assets/tweeter-log.svg" alt="Logo"> -->
       <p class="logo-text">Tweeter</p>
     </div>
     <div class="navigation-container">
-      <tui-tabs-with-more class="tabs" [activeItemIndex]="activeItemIndex">
-        <ng-container *ngFor="let tab of tabs">
-          <button *tuiItem tuiTab (click)="onClick(tab)">
-            {{ tab }}
-          </button>
-        </ng-container>
-      </tui-tabs-with-more>
+      <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+        <a mat-tab-link *ngFor="let tab of tabs" (click)="activeTab = tab.name" [active]="activeTab == tab.name"
+          (click)="onClick(tab.route)"> {{tab.name}}
+        </a>
+      </nav>
+      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
     </div>
     <div class="avatar-container">
-      <app-avatar></app-avatar>
-      <p>{{ user.name }}</p>
+      <app-avatar [name]="user.username"></app-avatar>
+      <p>{{ user.username }}</p>
+      <mat-icon [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
+      <mat-menu class="avatar__menu" #menu="matMenu">
+        <button mat-menu-item><mat-icon>person</mat-icon>My Profile</button>
+        <button mat-menu-item><mat-icon>group</mat-icon>Group Chat</button>
+        <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
+      </mat-menu>
     </div>
   </div>
 </header>
