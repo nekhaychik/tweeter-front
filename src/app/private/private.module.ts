@@ -11,7 +11,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { TweetsNewsComponent } from './components/tweets-news/tweets-news.component';
 import { TweetComponent } from './components/tweet/tweet.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
-import { TuiAvatarModule, TuiTabsModule } from '@taiga-ui/kit';
+import { TuiAvatarModule, TuiMultiSelectModule, TuiTabsModule } from '@taiga-ui/kit';
 import {
   TuiAlertModule,
   TuiButtonModule,
@@ -25,6 +25,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule } from '@angular/forms';
 
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { PrivateRoutingModule } from './private-routing.module';
@@ -60,6 +61,8 @@ import { HomeComponent } from './components/home/home.component';
     MatIconModule,
     MatMenuModule,
     MatTabsModule,
+    FormsModule,
+    TuiMultiSelectModule,
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
 })

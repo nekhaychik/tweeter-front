@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -26,7 +27,7 @@ import {
 export class AuthService {
   public user$: ReplaySubject<User | null> = new ReplaySubject<User | null>(1);
 
-  public constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+  public constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {
     this.http
       .get<User>(`${API}/user/me`)
       .subscribe((user) => this.user$.next(user));
@@ -38,13 +39,15 @@ export class AuthService {
         localStorage.setItem(ACCESS_TOKEN_FIELD, res.data.accessToken)
       ),
       tap(() => {
-        this.http.get<User>(`${API}/user/me`).subscribe((user) => this.user$.next(user));
+        this.http
+          .get<User>(`${API}/user/me`)
+          .subscribe((user) => this.user$.next(user));
         this.snackbar.open('Login Successfull', 'Close', {
           duration: 2000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
         });
-      }),
+      })
     );
   }
 
@@ -81,5 +84,20 @@ export class AuthService {
     } else {
       return of(null);
     }
+  }
+
+  public signOut() {
+    return this.http
+      .get(`${API}/auth/sign-out`, {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          ['Access-Control-Allow-Credentials']: 'true',
+        }),
+      })
+      .pipe(tap(() => localStorage.removeItem(ACCESS_TOKEN_FIELD)))
+      .subscribe(() => {
+        this.user$.next(null);
+        this.router.navigate(['/']);
+      });
   }
 }

@@ -29,3 +29,12 @@ header {
   align-items: center;
   column-gap: 11px;
 }
+
+mat-icon {
+  cursor: pointer;
+}
+
+.button__log-out {
+  /* color: #EB5757; */
+  border-top: 1px solid #E0E0E0;;
+}

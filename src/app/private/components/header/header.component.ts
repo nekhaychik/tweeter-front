@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 
@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/public/services/auth-service/auth.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public user: User | null = null;
@@ -46,6 +47,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onClick(route: string): void {
     this.router.navigate([route]);
+  }
+
+  public logOut() {
+    this.authService.signOut();
   }
 
   public ngOnDestroy(): void {
