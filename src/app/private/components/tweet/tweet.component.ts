@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ButtonAppearance, ButtonSize, Size } from '../../enums/enums';
+import { ButtonAppearance, ButtonSize, Size } from '../../../model/enums';
 
 @Component({
   selector: 'app-tweet',

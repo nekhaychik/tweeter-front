@@ -1,4 +1,4 @@
-<header *ngIf="user">
+<header>
   <div class="wrapper">
     <div class="logo-container">
       <!-- <img class="logo-image" src="../../assets/tweeter-log.svg" alt="Logo"> -->
@@ -12,7 +12,7 @@
       </nav>
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
     </div>
-    <div class="avatar-container">
+    <div class="avatar-container" *ngIf="user">
       <app-avatar [name]="user.username"></app-avatar>
       <p>{{ user.username }}</p>
       <mat-icon [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>

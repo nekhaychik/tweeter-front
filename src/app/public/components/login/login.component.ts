@@ -1,26 +1,29 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
 // Services
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 // Interface
 import { LoginControls } from 'src/app/model/control.interface';
-
-// Constants
 import { PASSWORD_MIN_LENGTH } from '../../constants/constants';
 import { User } from 'src/app/model/user.interface';
+import { Route } from 'src/app/model/enums';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  public route: typeof Route = Route;
   public loginForm: FormGroup = new FormGroup({});
   public formControls: typeof LoginControls = LoginControls;
   public authUser: User | null = null;
@@ -70,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             switchMap(() => this.authService.user$),
             tap((user: User | null) => {
               if (user) {
-                this.router.navigate([`./private/user-page/${user._id}`]);
+                this.router.navigate([this.route.home]);
               }
             })
           )
@@ -80,7 +83,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public navigateToMyPage(): void {
-    this.router.navigate([`./private/user-page`]);
+    this.router.navigate([this.route.home]);
   }
 
   public get email(): FormControl {

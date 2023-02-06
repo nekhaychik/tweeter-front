@@ -1,16 +1,16 @@
-.container {
+.login__container {
   display: flex;
   justify-content: center;
   padding: 100px;
   height: 100%;
-  background: url("../../../../assets/auth-background.jpg");
+  background: url("../../../../assets/auth-background_2.jpg") no-repeat;
 }
 
-.register {
-  margin-bottom: 20px;
+.register__container {
+  margin-top: 20px;
 }
 
-.form__wrapper {
+.login__form-wrapper {
   min-width: 33em;
 }
 
@@ -32,13 +32,10 @@ mat-form-field {
 mat-card-title {
   margin-top: 20px;
   align-self: center;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 36px;
   letter-spacing: -0.035em;
-  color: #333333;
 }
 
 mat-card,
@@ -50,7 +47,7 @@ mat-error {
   font-size: small;
 }
 
-.button {
+.login__form-buttons {
   display: flex;
   column-gap: 20px;
   justify-content: flex-end;

@@ -1,35 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
-// Interfaces
-import { SignUpControls } from 'src/app/model/control.interface';
-
 // Services
-import { AuthService } from '../../services/auth-service/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 // Custom validators
 import { CustomValidators } from '../../_helpers/custom-validators';
 
-// Constants
+// Interfaces, constants
+import { SignUpControls } from 'src/app/model/control.interface';
+
 import {
   PASSWORD_MIN_LENGTH,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LEGTH,
 } from '../../constants/constants';
+import { Route } from 'src/app/model/enums';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+  public route: typeof Route = Route;
   public signUpForm: FormGroup = new FormGroup(
     {},
     { validators: CustomValidators.passwordsMatching }
   );
   public formControls: typeof SignUpControls = SignUpControls;
+  private subscriptionsList: Subscription[] = [];
 
   public ngOnInit(): void {
     this.signUpForm.addControl(
@@ -82,14 +91,16 @@ export class RegisterComponent implements OnInit {
 
   public register(): void {
     if (this.signUpForm.valid) {
-      this.authService
-        .signUp({
-          email: this.email.value,
-          password: this.password.value,
-          username: this.username.value,
-        })
-        .pipe(tap(() => this.router.navigate(['./public/sign-up-verify'])))
-        .subscribe();
+      this.subscriptionsList.push(
+        this.authService
+          .signUp({
+            email: this.email.value,
+            password: this.password.value,
+            username: this.username.value,
+          })
+          .pipe(tap(() => this.router.navigate([this.route.signUpVerify])))
+          .subscribe()
+      );
     }
   }
 
@@ -107,5 +118,11 @@ export class RegisterComponent implements OnInit {
 
   public get passwordConfirm(): FormControl {
     return this.signUpForm.get(SignUpControls.passwordConfirm) as FormControl;
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptionsList.forEach((subscription: Subscription) =>
+      subscription.unsubscribe()
+    );
   }
 }

@@ -1,17 +1,12 @@
-<div class="container">
+<div class="login__container">
   <div>
-    <div class="register">
-      <a [routerLink]="['../sign-up']">Go to Register</a>
-      <p>Hint: If you are here for the first time you first need to register a user</p>
-    </div>
-
-    <div class="form__wrapper">
+    <div class="login__form-wrapper">
       <mat-card>
         <mat-card-title>Log In</mat-card-title>
         <mat-card-content>
           <form [formGroup]="loginForm" (ngSubmit)="login()">
             <mat-form-field>
-              <mat-label>Email*</mat-label>
+              <mat-label>Email</mat-label>
               <input type="email" matInput placeholder="Ex. pat@example.com" [formControlName]="formControls.email">
               <mat-error *ngIf="email.touched && email.hasError('email') && !email.hasError('required')">
                 Please enter a valid email address
@@ -22,7 +17,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>Password*</mat-label>
+              <mat-label>Password</mat-label>
               <input type="password" matInput placeholder="Password" [formControlName]="formControls.password">
               <mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">
                 Password length should be 6 characters or more
@@ -32,7 +27,7 @@
               </mat-error>
             </mat-form-field>
 
-            <div class="button">
+            <div class="login__form-buttons">
               <button *ngIf="authUser" mat-raised-button color="primary" type="button" (click)="navigateToMyPage()">Go
                 to my page</button>
               <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
@@ -40,6 +35,11 @@
           </form>
         </mat-card-content>
       </mat-card>
+    </div>
+
+    <div class="register__container">
+      <a class="register__link" [routerLink]="[route.signUp]">Go to Register</a>
+      <p>Hint: If you are here for the first time you first need to register a user</p>
     </div>
   </div>
 </div>

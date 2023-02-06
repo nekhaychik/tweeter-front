@@ -19,7 +19,7 @@ import {
   ACCESS_TOKEN_FIELD,
   API,
   USER_EMAIL_FIELD,
-} from '../../constants/constants';
+} from '../constants/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -27,10 +27,14 @@ import {
 export class AuthService {
   public user$: ReplaySubject<User | null> = new ReplaySubject<User | null>(1);
 
-  public constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) {
+  public constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackbar: MatSnackBar
+  ) {
     this.http
       .get<User>(`${API}/user/me`)
-      .subscribe((user) => this.user$.next(user));
+      .subscribe((user: User) => this.user$.next(user));
   }
 
   public login(user: UserLogIn): Observable<LoginResponse> {
@@ -41,7 +45,7 @@ export class AuthService {
       tap(() => {
         this.http
           .get<User>(`${API}/user/me`)
-          .subscribe((user) => this.user$.next(user));
+          .subscribe((user: User) => this.user$.next(user));
         this.snackbar.open('Login Successfull', 'Close', {
           duration: 2000,
           horizontalPosition: 'right',
@@ -86,7 +90,7 @@ export class AuthService {
     }
   }
 
-  public signOut() {
+  public signOut(): Observable<any> {
     return this.http
       .get(`${API}/auth/sign-out`, {
         withCredentials: true,
@@ -94,10 +98,6 @@ export class AuthService {
           ['Access-Control-Allow-Credentials']: 'true',
         }),
       })
-      .pipe(tap(() => localStorage.removeItem(ACCESS_TOKEN_FIELD)))
-      .subscribe(() => {
-        this.user$.next(null);
-        this.router.navigate(['/']);
-      });
+      .pipe(tap(() => localStorage.removeItem(ACCESS_TOKEN_FIELD)));
   }
 }

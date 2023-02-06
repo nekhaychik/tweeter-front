@@ -4,10 +4,10 @@ import { map, Observable, Subscription, tap } from 'rxjs';
 
 // Interfaces
 import { SubscriptionI, User } from 'src/app/model/user.interface';
-import { Size } from '../../enums/enums';
+import { Size } from '../../../model/enums';
 
 // Services
-import { AuthService } from 'src/app/public/services/auth-service/auth.service';
+import { AuthService } from 'src/app/public/services/auth.service';
 import { SubscriptionService } from '../../services/subscription.service';
 import { UserService } from '../../services/user.service';
 

@@ -1,9 +1,9 @@
-<div class="container">
-  <div class="form__wrapper">
+<div class="verify__container">
+  <div class="verify__form-wrapper">
     <mat-card>
       <mat-card-title>Sign Up Verify</mat-card-title>
       <mat-card-content>
-        <p class="form__message">A verification code has been sent to your email address</p>
+        <p class="verify__form-message">A verification code has been sent to your email address</p>
         <form [formGroup]="signUpVerifyForm" (ngSubmit)="signUpVerify()">
           <mat-form-field>
             <mat-label>Verification Code</mat-label>
@@ -13,7 +13,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="button">
+          <div class="verify__form-button">
             <button mat-raised-button color="primary" type="submit" [disabled]="!signUpVerifyForm.valid">Verify</button>
           </div>
         </form>

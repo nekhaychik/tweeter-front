@@ -1,22 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 
 // Interfaces
 import { HeaderTab } from 'src/app/model/common.interface';
 import { User } from 'src/app/model/user.interface';
-import { Route } from '../../enums/enums';
+import { Route } from '../../../model/enums';
 
 // Services
-import { AuthService } from 'src/app/public/services/auth-service/auth.service';
+import { AuthService } from 'src/app/public/services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
+  @Input()
   public user: User | null = null;
   public readonly tabs: HeaderTab[] = [
     {
@@ -33,29 +34,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
   public activeTab: string = this.tabs[1].name;
-  private subscriptionsList: Subscription[] = [];
 
   public constructor(private router: Router, public authService: AuthService) {}
-
-  public ngOnInit(): void {
-    this.subscriptionsList.push(
-      this.authService.user$.subscribe(
-        (user: User | null) => (this.user = user)
-      )
-    );
-  }
 
   public onClick(route: string): void {
     this.router.navigate([route]);
   }
 
   public logOut() {
-    this.authService.signOut();
-  }
-
-  public ngOnDestroy(): void {
-    this.subscriptionsList.forEach((subscription: Subscription) =>
-      subscription.unsubscribe()
-    );
+    this.authService.signOut().subscribe(() => {
+      this.authService.user$.next(null);
+      this.router.navigate(['/']);
+    });
   }
 }
