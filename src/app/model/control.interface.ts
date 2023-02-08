@@ -13,3 +13,8 @@ export enum SignUpControls {
 export enum SignUpVerifyControls {
   emailCode = 'emailCode',
 }
+
+export enum CreateTweetControls {
+  text = 'text',
+  isComment = 'isComment',
+}

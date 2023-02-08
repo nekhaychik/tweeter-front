@@ -11,7 +11,11 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { TweetsNewsComponent } from './components/tweets-news/tweets-news.component';
 import { TweetComponent } from './components/tweet/tweet.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
-import { TuiAvatarModule, TuiMultiSelectModule, TuiTabsModule } from '@taiga-ui/kit';
+import {
+  TuiAvatarModule,
+  TuiMultiSelectModule,
+  TuiTabsModule,
+} from '@taiga-ui/kit';
 import {
   TuiAlertModule,
   TuiButtonModule,
@@ -26,6 +30,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { TuiTextAreaModule } from '@taiga-ui/kit';
+import { MatSelectModule } from '@angular/material/select';
 
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { PrivateRoutingModule } from './private-routing.module';
@@ -63,6 +74,13 @@ import { HomeComponent } from './components/home/home.component';
     MatTabsModule,
     FormsModule,
     TuiMultiSelectModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    TuiTextAreaModule,
+    MatSelectModule,
   ],
   providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
 })

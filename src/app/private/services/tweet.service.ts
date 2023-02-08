@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 // Interfaces & constants
 import {
@@ -17,12 +18,21 @@ import { API } from 'src/app/public/constants/constants';
 export class TweetService {
   private tweetUrl: string = API + '/tweet';
 
-  public constructor(private http: HttpClient) {}
+  public constructor(private http: HttpClient, private snackbar: MatSnackBar) {}
 
   public createTweet(tweet: CreateTweetI): Observable<TweetI> {
-    return this.http
-      .post<TweetI>(this.tweetUrl, tweet)
-      .pipe(catchError(this.handleError<any>('createTweet')));
+    return this.http.post<TweetI>(this.tweetUrl, tweet).pipe(
+      catchError(this.handleError<any>('createTweet')),
+      tap((tweet: TweetI) => {
+        if (tweet) {
+          this.snackbar.open('Tweet was successful created', 'Close', {
+            duration: 2000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        }
+      })
+    );
   }
 
   public repostTweet(repostedTweetId: string): Observable<TweetI> {
