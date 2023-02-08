@@ -37,6 +37,10 @@ export class HeaderComponent {
 
   public constructor(private router: Router, public authService: AuthService) {}
 
+  public trackByFn(index: number, item: HeaderTab): number {
+    return index;
+  }
+
   public onClick(route: string): void {
     this.router.navigate([route]);
   }

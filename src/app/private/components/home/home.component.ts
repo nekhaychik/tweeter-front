@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap, tap } from 'rxjs';
+
+// Interfaces, constants
 import { CreateTweetControls } from 'src/app/model/control.interface';
 import { Size } from 'src/app/model/enums';
-import { User } from 'src/app/model/user.interface';
+import { SubscriptionI, User } from 'src/app/model/user.interface';
 import { TWEET_TEXT_MAX_LENGTH } from 'src/app/public/constants/constants';
+
+// Services
 import { AuthService } from 'src/app/public/services/auth.service';
+import { SubscriptionService } from '../../services/subscription.service';
 import { TweetService } from '../../services/tweet.service';
 
 interface CommentItemI {
@@ -24,7 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public textMaxSize: number = TWEET_TEXT_MAX_LENGTH;
   public createTweetForm: FormGroup = new FormGroup({});
   public formControls: typeof CreateTweetControls = CreateTweetControls;
-  public authUser: User | null = null;
+  public authUser!: User;
+  public userSubscriptions: string[] = [];
   public commentItems: CommentItemI[] = [
     {
       view: 'Everyone',
@@ -40,6 +46,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public currentCommentValue: CommentItemI = this.commentItems[0];
   private subscriptionsList: Subscription[] = [];
 
+  public constructor(
+    private authService: AuthService,
+    private tweetService: TweetService,
+    private subscriptionService: SubscriptionService
+  ) {}
+
   public ngOnInit(): void {
     this.createTweetForm.addControl(
       CreateTweetControls.text,
@@ -52,16 +64,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptionsList.push(
-      this.authService.user$.subscribe(
-        (user: User | null) => (this.authUser = user)
-      )
+      this.authService.user$
+        .pipe(
+          tap((user: User | null) => {
+            if (user) {
+              this.authUser = user;
+            }
+          }),
+          switchMap(() =>
+            this.subscriptionService.getAllUserSubscribers(this.authUser._id)
+          )
+        )
+        .subscribe((subscriptions: SubscriptionI[]) => {
+          this.userSubscriptions = subscriptions.map(
+            (s: SubscriptionI) => s.subscriberId
+          );
+        })
     );
   }
 
-  public constructor(
-    private authService: AuthService,
-    private tweetService: TweetService
-  ) {}
+  public trackByFn(index: number, item: CommentItemI): number {
+    return index;
+  }
 
   public createTweet(): void {
     if (this.createTweetForm.valid) {

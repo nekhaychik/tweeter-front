@@ -21,7 +21,7 @@
                 <mat-icon>{{ currentCommentValue.icon }}</mat-icon> {{ currentCommentValue.view }} can replay
               </div>
               <mat-menu class="avatar__menu" #menu="matMenu">
-                <button *ngFor="let item of commentItems" mat-menu-item (click)="commentValue(item)"
+                <button *ngFor="let item of commentItems; trackBy: trackByFn" mat-menu-item (click)="commentValue(item)"
                   [value]="item.value"><mat-icon>{{ item.icon }}</mat-icon>{{ item.view }}</button>
               </mat-menu>
             </div>
@@ -34,7 +34,7 @@
     </mat-card>
 
     <div class="tweets__wrapper">
-      <app-tweets-news></app-tweets-news>
+      <app-tweets-news [usersIds]="userSubscriptions"></app-tweets-news>
     </div>
   </section>
   <tui-tabs>

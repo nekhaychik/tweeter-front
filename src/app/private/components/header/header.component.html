@@ -6,8 +6,8 @@
     </div>
     <div class="navigation-container">
       <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-        <a mat-tab-link *ngFor="let tab of tabs" (click)="activeTab = tab.name" [active]="activeTab == tab.name"
-          (click)="onClick(tab.route)"> {{tab.name}}
+        <a mat-tab-link *ngFor="let tab of tabs; trackBy: trackByFn" (click)="activeTab = tab.name"
+          [active]="activeTab == tab.name" (click)="onClick(tab.route)"> {{tab.name}}
         </a>
       </nav>
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
@@ -20,7 +20,8 @@
         <button mat-menu-item><mat-icon>person</mat-icon>My Profile</button>
         <button mat-menu-item><mat-icon>group</mat-icon>Group Chat</button>
         <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
-        <button class="button__log-out" (click)="logOut()" mat-menu-item><mat-icon>exit_to_app</mat-icon>Log Out</button>
+        <button class="button__log-out" (click)="logOut()" mat-menu-item><mat-icon>exit_to_app</mat-icon>Log
+          Out</button>
       </mat-menu>
     </div>
   </div>
