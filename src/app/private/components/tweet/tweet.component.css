@@ -92,3 +92,7 @@
   justify-self: center;
   align-self: center;
 }
+
+app-button {
+  text-align: center;
+}
