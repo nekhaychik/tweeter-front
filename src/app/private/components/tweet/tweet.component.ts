@@ -4,12 +4,18 @@ import { Subscription, switchMap, tap } from 'rxjs';
 // Interfaces
 import { LikeI, TweetI } from 'src/app/model/tweet.interface';
 import { User } from 'src/app/model/user.interface';
-import { AuthService } from 'src/app/public/services/auth.service';
 import { ButtonAppearance, ButtonSize, Size } from '../../../model/enums';
-import { TweetService } from '../../services/tweet.service';
 
 // Services
 import { UserService } from '../../services/user.service';
+import { TweetService } from '../../services/tweet.service';
+import { AuthService } from 'src/app/public/services/auth.service';
+
+interface ButtonI {
+  active: string;
+  unactive: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-tweet',
@@ -19,15 +25,41 @@ import { UserService } from '../../services/user.service';
 export class TweetComponent implements OnInit, OnDestroy {
   @Input()
   public tweet!: TweetI;
-  public amountOfLikes: number = 0;
   public usersLikedTweet: string[] = [];
+  public usersSavedTweet: string[] = [];
+  public usersRepostedTweet: string[] = [];
   public authUser!: User;
   public avatarSize: Size = Size.m;
   public buttonAppearance: ButtonAppearance = ButtonAppearance.mono;
   public buttonSize: ButtonSize = ButtonSize.m;
-  public tweetButtons: string[] = ['Comments', 'Reposts', 'Likes', 'Saved'];
+  public activeButtonLikeStyle: string = 'color: #EB5757;';
+  public activeButtonSaveStyle: string = 'color: #2D9CDB;';
+  public activeButtonRepostStyle: string = 'color: #27AE60;';
+  public unactiveButton: string = 'color: #4F4F4F;';
   public user!: User;
   private subscriptionList: Subscription[] = [];
+  public buttonNames: ButtonI[] = [
+    {
+      active: 'Comment',
+      unactive: 'Comment',
+      icon: 'chat_bubble_outline',
+    },
+    {
+      active: 'Retweeted',
+      unactive: 'Retweet',
+      icon: 'loop',
+    },
+    {
+      active: 'Liked',
+      unactive: 'Like',
+      icon: 'thumb_up_alt',
+    },
+    {
+      active: 'Saved',
+      unactive: 'Save',
+      icon: 'turned_in_not',
+    },
+  ];
 
   public constructor(
     private userService: UserService,
@@ -41,6 +73,7 @@ export class TweetComponent implements OnInit, OnDestroy {
         if (user) this.authUser = user;
       })
     );
+
     this.subscriptionList.push(
       this.userService
         .getUserById(this.tweet.authorId)
@@ -49,12 +82,20 @@ export class TweetComponent implements OnInit, OnDestroy {
 
     this.subscriptionList.push(
       this.tweetService
-        .getAmountOfTweetLike(this.tweet._id)
-        .pipe(
-          tap((amount: number) => (this.amountOfLikes = amount)),
-          switchMap(() => this.tweetService.getUsersLikedTweet(this.tweet._id))
-        )
+        .getUsersLikedTweet(this.tweet._id)
         .subscribe((users: string[]) => (this.usersLikedTweet = users))
+    );
+
+    this.subscriptionList.push(
+      this.tweetService
+        .getUsersRepostedTweet(this.tweet._id)
+        .subscribe((users: string[]) => (this.usersRepostedTweet = users))
+    );
+
+    this.subscriptionList.push(
+      this.tweetService
+        .getUsersSavedTweet(this.tweet._id)
+        .subscribe((users: string[]) => (this.usersSavedTweet = users))
     );
   }
 
@@ -66,27 +107,17 @@ export class TweetComponent implements OnInit, OnDestroy {
     return new Date(this.tweet.createdAt).toLocaleString();
   }
 
-  public handleClick(value: string) {
-    switch (value) {
-      case this.tweetButtons[0]:
-        this.repost();
-        break;
-      case this.tweetButtons[1]:
-        this.repost();
-        break;
-      case this.tweetButtons[2]:
-        this.like();
-        break;
-      case this.tweetButtons[3]:
-        this.repost();
-        break;
-    }
+  public addStyle(arr: string[], activeStyle: string) {
+    return arr.includes(this.authUser._id) ? activeStyle : this.unactiveButton;
   }
 
   public repost(): void {
-    this.subscriptionList.push(
-      this.tweetService.repostTweet(this.tweet._id).subscribe()
-    );
+    if (!this.usersRepostedTweet.includes(this.authUser._id))
+      this.subscriptionList.push(
+        this.tweetService
+          .repostTweet(this.tweet._id)
+          .subscribe(() => this.usersRepostedTweet.push(this.authUser._id))
+      );
   }
 
   public likeHandler(): void {
@@ -100,7 +131,6 @@ export class TweetComponent implements OnInit, OnDestroy {
   private like(): void {
     this.subscriptionList.push(
       this.tweetService.likeTweet(this.tweet._id).subscribe((like: LikeI) => {
-        this.amountOfLikes++;
         this.usersLikedTweet.push(this.authUser._id);
       })
     );
@@ -109,9 +139,33 @@ export class TweetComponent implements OnInit, OnDestroy {
   private unlike(): void {
     this.subscriptionList.push(
       this.tweetService.unlike(this.tweet._id).subscribe(() => {
-        this.amountOfLikes--;
         const index: number = this.usersLikedTweet.indexOf(this.authUser._id);
         this.usersLikedTweet.splice(index, 1);
+      })
+    );
+  }
+
+  public saveHandler(): void {
+    if (this.usersSavedTweet.includes(this.authUser._id)) {
+      this.unsave();
+    } else {
+      this.save();
+    }
+  }
+
+  private save(): void {
+    this.subscriptionList.push(
+      this.tweetService
+        .saveTweet(this.tweet._id)
+        .subscribe(() => this.usersSavedTweet.push(this.authUser._id))
+    );
+  }
+
+  private unsave(): void {
+    this.subscriptionList.push(
+      this.tweetService.unsave(this.tweet._id).subscribe(() => {
+        const index: number = this.usersLikedTweet.indexOf(this.authUser._id);
+        this.usersSavedTweet.splice(index, 1);
       })
     );
   }

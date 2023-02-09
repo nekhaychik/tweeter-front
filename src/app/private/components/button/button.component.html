@@ -1,8 +1,3 @@
-<button
-  tuiButton
-  [appearance]="appearance"
-  [size]="size"
-  icon="tuiIconPlusLarge"
->
-  {{ text }}
+<button tuiButton [appearance]="appearance" [size]="size" [disabled]="disabled"><span class="button__context active"
+    [style]="textColor"><mat-icon>{{ icon }}</mat-icon>{{ text }}</span>
 </button>

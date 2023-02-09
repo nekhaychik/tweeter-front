@@ -9,10 +9,14 @@ import { ButtonAppearance, ButtonSize } from '../../../model/enums';
 export class ButtonComponent {
   @Input()
   public appearance: ButtonAppearance = ButtonAppearance.primary;
-
   @Input()
   public size: ButtonSize = ButtonSize.m;
-
   @Input()
   public text: string = 'Button';
+  @Input()
+  public textColor: string = 'color: black;';
+  @Input()
+  public disabled: boolean = false;
+  @Input()
+  public icon: string = 'add';
 }

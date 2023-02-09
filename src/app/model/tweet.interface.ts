@@ -16,6 +16,18 @@ export interface LikeI {
   createdAt: Date;
 }
 
+export interface RepostI {
+  tweetI: string;
+  userI: string;
+  createdAt: string;
+}
+
+export interface SaveI {
+  tweetI: string;
+  userI: string;
+  createdAt: string;
+}
+
 export interface CreateTweetI {
   text?: string;
   isComment: boolean;

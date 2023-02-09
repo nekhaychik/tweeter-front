@@ -1,0 +1,10 @@
+span {
+  display: flex;
+  column-gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+span:last-child {
+  align-self: flex-end;
+}
