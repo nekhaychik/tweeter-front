@@ -2,21 +2,28 @@
   <div class="tweet__user-info">
     <app-avatar class="tweet__user-avatar" [size]="avatarSize"></app-avatar>
     <p class="tweet__user-name">{{ user.username }}</p>
-    <p class="tweet__created-date">{{ tweet.createdAt }}</p>
+    <p class="tweet__created-date">{{ dateString }}</p>
   </div>
   <div *ngIf="tweet.text" class="tweet__text">
     <p>{{ tweet.text }}</p>
   </div>
   <div *ngIf="tweet.imagesURLs?.length" class="tweet__image-wrapper">
-    <img *ngFor="let image of tweet?.imagesURLs; trackBy: trackByFn" class="tweet__image" [src]="image" alt="User Image">
+    <img *ngFor="let image of tweet?.imagesURLs; trackBy: trackByFn" class="tweet__image" [src]="image"
+      alt="User Image">
   </div>
   <div class="tweet__info">
-    <p>1 comments</p>
+    <p>{{ amountOfLikes }} likes</p>
     <p>1 retweet</p>
     <p>1 saved</p>
   </div>
   <div class="tweet__buttons">
     <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
-      *ngFor="let button of tweetButtons; trackBy: trackByFn" [text]="button"></app-button>
+      [text]="tweetButtons[0]"></app-button>
+    <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
+      [text]="tweetButtons[1]"></app-button>
+    <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
+      [text]="tweetButtons[2]" (click)="likeHandler()"></app-button>
+    <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
+      [text]="tweetButtons[3]"></app-button>
   </div>
 </div>

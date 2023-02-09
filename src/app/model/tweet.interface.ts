@@ -10,6 +10,12 @@ export interface TweetI {
   parentRecordId?: string;
 }
 
+export interface LikeI {
+  tweetId: string;
+  userId: string;
+  createdAt: Date;
+}
+
 export interface CreateTweetI {
   text?: string;
   isComment: boolean;

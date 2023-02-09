@@ -74,6 +74,5 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     TuiTextAreaModule,
   ],
-  // providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
 })
 export class PrivateModule {}

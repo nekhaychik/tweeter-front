@@ -1,5 +1,5 @@
 <div class="tweets__news">
-  <ng-container *ngFor="let tweet of sortedTweets; trackBy: trackByFn">
+  <ng-container *ngFor="let tweet of tweets; trackBy: trackByFn">
     <app-tweet [tweet]="tweet"></app-tweet>
   </ng-container>
 </div>

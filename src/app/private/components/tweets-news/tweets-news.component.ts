@@ -32,7 +32,16 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
         this.subscriptionList.push(
           this.tweetService
             .getAllUserTweets(userId)
-            .subscribe((tweets: TweetI[]) => this.tweets.push(...tweets))
+            .subscribe((tweets: TweetI[]) => {
+              this.tweets.push(...tweets);
+              if (this.tweets.length > 1) {
+                this.tweets.sort(
+                  (a: TweetI, b: TweetI) =>
+                    Date.parse(b.createdAt.toString()) -
+                    Date.parse(a.createdAt.toString())
+                );
+              }
+            })
         );
       });
     }
@@ -40,12 +49,6 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
 
   public trackByFn(index: number, item: TweetI): number {
     return index;
-  }
-
-  public get sortedTweets(): TweetI[] {
-    return this.tweets.sort(
-      (a: TweetI, b: TweetI) => +a.createdAt - +b.createdAt
-    );
   }
 
   public ngOnDestroy(): void {
