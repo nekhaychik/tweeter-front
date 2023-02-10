@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, SignUpVerifyComponent],
@@ -23,5 +24,6 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatButtonModule,
   ],
+  providers: [CookieService]
 })
 export class PublicModule {}

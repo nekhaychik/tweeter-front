@@ -5,5 +5,12 @@ export interface LoginResponse {
     accessToken: string;
     refrfeshToken: string;
   };
-  user: User;
+  cookies: {
+    name: string;
+    value: string;
+    domain?: string;
+    path?: string;
+    expires?: number;
+    secure: boolean;
+  }[];
 }

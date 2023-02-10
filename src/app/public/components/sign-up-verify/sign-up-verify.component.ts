@@ -7,10 +7,12 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 // Interfaces
 import { SignUpVerifyControls } from 'src/app/model/control.interface';
+import { Route } from 'src/app/model/enums';
+import { User } from 'src/app/model/user.interface';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class SignUpVerifyComponent implements OnInit, OnDestroy {
   public signUpVerifyForm: FormGroup = new FormGroup({});
   public formControls: typeof SignUpVerifyControls = SignUpVerifyControls;
   private subscriptionsList: Subscription[] = [];
+  private route: typeof Route = Route;
 
   public ngOnInit(): void {
     this.signUpVerifyForm.addControl(
@@ -33,7 +36,7 @@ export class SignUpVerifyComponent implements OnInit, OnDestroy {
 
   public constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   public signUpVerify(): void {
@@ -42,9 +45,10 @@ export class SignUpVerifyComponent implements OnInit, OnDestroy {
         this.authService
           .signUpVerify(this.emailCode.value)
           .pipe(
-            tap((res) => {
-              if (res) {
-                this.router.navigate(['/']);
+            switchMap(() => this.authService.user$),
+            tap((user: User | null) => {
+              if (user) {
+                this.router.navigate([this.route.home]);
               }
             })
           )

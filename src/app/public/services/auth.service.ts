@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -30,7 +31,8 @@ export class AuthService {
   public constructor(
     private http: HttpClient,
     private router: Router,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private cookieServie: CookieService
   ) {
     this.http
       .get<User>(`${API}/user/me`)
@@ -42,10 +44,19 @@ export class AuthService {
       tap((res: LoginResponse) =>
         localStorage.setItem(ACCESS_TOKEN_FIELD, res.data.accessToken)
       ),
-      tap(() => {
+      tap((res) => {
         this.http
           .get<User>(`${API}/user/me`)
           .subscribe((user: User) => this.user$.next(user));
+        const cookie = res.cookies[0];
+        this.cookieServie.set(
+          cookie.name,
+          cookie.value,
+          cookie.expires,
+          cookie.path,
+          cookie.domain,
+          cookie.secure
+        );
         this.snackbar.open('Login Successfull', 'Close', {
           duration: 2000,
           horizontalPosition: 'right',
@@ -77,13 +88,16 @@ export class AuthService {
             localStorage.removeItem(USER_EMAIL_FIELD);
             localStorage.setItem(ACCESS_TOKEN_FIELD, res.data.accessToken);
           }),
-          tap(() =>
+          tap(() => {
+            this.http
+              .get<User>(`${API}/user/me`)
+              .subscribe((user: User) => this.user$.next(user));
             this.snackbar.open('Authorization Successfull', 'Close', {
               duration: 2000,
               horizontalPosition: 'right',
               verticalPosition: 'top',
-            })
-          )
+            });
+          })
         );
     } else {
       return of(null);
