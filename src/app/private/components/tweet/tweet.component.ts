@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, switchMap, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 
 // Interfaces
 import { LikeI, TweetI } from 'src/app/model/tweet.interface';
@@ -37,6 +37,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   public activeButtonRepostStyle: string = 'color: #27AE60;';
   public unactiveButton: string = 'color: #4F4F4F;';
   public user!: User;
+  public recordParentAuthor: User | null = null;
   private subscriptionList: Subscription[] = [];
   public buttonNames: ButtonI[] = [
     {
@@ -77,7 +78,9 @@ export class TweetComponent implements OnInit, OnDestroy {
     this.subscriptionList.push(
       this.userService
         .getUserById(this.tweet.authorId)
-        .subscribe((user: User) => (this.user = user))
+        .subscribe((user: User) => {
+          if (user) this.user = user;
+        })
     );
 
     this.subscriptionList.push(
@@ -97,10 +100,27 @@ export class TweetComponent implements OnInit, OnDestroy {
         .getUsersSavedTweet(this.tweet._id)
         .subscribe((users: string[]) => (this.usersSavedTweet = users))
     );
+
+    if (this.tweet.parentRecordAuthorId) {
+      this.subscriptionList.push(
+        this.userService
+          .getUserById(this.tweet.parentRecordAuthorId)
+          .pipe(tap((user: User) => (this.recordParentAuthor = user)))
+          .subscribe((user: User) => console.log(user.username))
+      );
+    }
   }
 
   public trackByFn(index: number, item: string): number {
     return index;
+  }
+
+  public get tweetUserName(): string {
+    if (this.tweet.parentRecordAuthorId) {
+    }
+    return this.recordParentAuthor?.username
+      ? this.recordParentAuthor.username
+      : this.user.username;
   }
 
   public get dateString(): string {
@@ -112,12 +132,19 @@ export class TweetComponent implements OnInit, OnDestroy {
   }
 
   public repost(): void {
-    if (!this.usersRepostedTweet.includes(this.authUser._id))
+    if (
+      !this.usersRepostedTweet.includes(this.authUser._id) &&
+      this.tweet.authorId !== this.authUser._id
+    ) {
+      let repostedTweetId: string = this.tweet._id;
+      if (this.tweet.parentRecordId)
+        repostedTweetId = this.tweet.parentRecordId;
       this.subscriptionList.push(
         this.tweetService
-          .repostTweet(this.tweet._id)
+          .repostTweet(repostedTweetId)
           .subscribe(() => this.usersRepostedTweet.push(this.authUser._id))
       );
+    }
   }
 
   public likeHandler(): void {

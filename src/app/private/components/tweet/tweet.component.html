@@ -1,7 +1,10 @@
+<div class="repost__info" *ngIf="recordParentAuthor"><mat-icon>loop</mat-icon><span>{{ user?.username }} Retweeted</span>
+</div>
 <div class="tweet__wrapper" *ngIf="user">
   <div class="tweet__user-info">
-    <app-avatar class="tweet__user-avatar" [size]="avatarSize"></app-avatar>
-    <p class="tweet__user-name">{{ user.username }}</p>
+    <app-avatar class="tweet__user-avatar" [size]="avatarSize"
+      [name]="tweetUserName"></app-avatar>
+    <p class="tweet__user-name">{{ tweetUserName }}</p>
     <p class="tweet__created-date">{{ dateString }}</p>
   </div>
   <div *ngIf="tweet.text" class="tweet__text">
@@ -22,7 +25,7 @@
     <app-button class=" tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
       [textColor]="addStyle(usersRepostedTweet, activeButtonRepostStyle)"
       [text]="usersRepostedTweet.includes(authUser._id) ? buttonNames[1].active : buttonNames[1].unactive"
-      [disabled]="usersRepostedTweet.includes(authUser._id)" [icon]="buttonNames[1].icon"
+      [disabled]="usersRepostedTweet.includes(authUser._id) || this.tweet.authorId === authUser._id" [icon]="buttonNames[1].icon"
       (click)="repost()"></app-button>
     <app-button class="tweet__button" [appearance]="buttonAppearance" [size]="buttonSize"
       [textColor]="addStyle(usersLikedTweet, activeButtonLikeStyle)"
