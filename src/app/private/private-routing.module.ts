@@ -12,7 +12,7 @@ const routes: Routes = [
     component: UserPageComponent,
     children: [
       {
-        path: 'user-page/:id',
+        path: 'home/:id',
         component: MainComponent,
       },
       { path: 'home', component: HomeComponent },
