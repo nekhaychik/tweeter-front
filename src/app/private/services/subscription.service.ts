@@ -8,13 +8,13 @@ import { API } from 'src/app/public/constants/constants';
   providedIn: 'root',
 })
 export class SubscriptionService {
-  private subscriptionUrl: string = '/subscription';
+  private subscriptionUrl: string = API + '/subscription';
 
   public constructor(private http: HttpClient) {}
 
   public getAllUserSubscriptions(userId: string): Observable<SubscriptionI[]> {
     const url: string =
-      API + this.subscriptionUrl + `/get-subscriptions?userId=${userId}`;
+      this.subscriptionUrl + `/get-subscriptions?userId=${userId}`;
     return this.http
       .get<SubscriptionI[]>(url)
       .pipe(
@@ -26,12 +26,32 @@ export class SubscriptionService {
 
   public getAllUserSubscribers(userId: string): Observable<SubscriptionI[]> {
     const url: string =
-      API + this.subscriptionUrl + `/get-subscribers?userId=${userId}`;
+      this.subscriptionUrl + `/get-subscribers?userId=${userId}`;
     return this.http
       .get<SubscriptionI[]>(url)
       .pipe(
         catchError(
           this.handleError<SubscriptionI[]>('getAllUserSubscribers', [])
+        )
+      );
+  }
+
+  public subscribe(userId: string): Observable<SubscriptionI> {
+    return this.http
+      .post<SubscriptionI>(this.subscriptionUrl + `?userId=${userId}`, null)
+      .pipe(
+        catchError(
+          this.handleError<SubscriptionI>(`subscribe to user with id=${userId}`)
+        )
+      );
+  }
+
+  public unsubscribe(userId: string) {
+    return this.http
+      .delete(this.subscriptionUrl + `?userId=${userId}`)
+      .pipe(
+        catchError(
+          this.handleError<SubscriptionI>(`unsubscribe user with id=${userId}`)
         )
       );
   }

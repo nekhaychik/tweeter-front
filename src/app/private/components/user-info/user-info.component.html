@@ -2,9 +2,14 @@
   <app-avatar class="information__avatar" [size]="avatarSize" [name]="user.username"></app-avatar>
   <div class="information__wrapper">
     <div class="information__user-name">{{ user.username }}</div>
-    <div class="information__user-following">{{ followingCount }} following</div>
-    <div class="information__user-followers">{{ followersCount }} followers</div>
-    <app-button *ngIf="authUser?._id !== user._id" class="button__follow" [text]="buttonFollowText">
+    <div class="information__user-following">{{ following.length }} following</div>
+    <div class="information__user-followers">{{ followers.length }} followers</div>
+    <app-button *ngIf="authUser?._id !== user._id && !followers.includes(authUser._id)" class="button__follow"
+      [text]="buttonFollowText" (click)="followUserHandler()">
+    </app-button>
+    <app-button [disabled]="true" [icon]="bottonFollowedIcon"
+      *ngIf="authUser?._id !== user._id && followers.includes(authUser._id)" class="button__follow"
+      [text]="buttonFollowedText" (click)="unfollowUserHandler()">
     </app-button>
     <div class="information__user-description">{{ user.description }}</div>
   </div>
