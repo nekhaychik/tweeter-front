@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-tweets-menu',
   templateUrl: './tweets-menu.component.html',
   styleUrls: ['./tweets-menu.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TweetsMenuComponent {
   public menuItems: string[] = ['Tweets', 'Tweets & replies', 'Media', 'Likes'];

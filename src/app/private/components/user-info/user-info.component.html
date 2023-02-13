@@ -4,7 +4,7 @@
     <div class="information__user-name">{{ user.username }}</div>
     <div class="information__user-following">{{ followingCount }} following</div>
     <div class="information__user-followers">{{ followersCount }} followers</div>
-    <app-button *ngIf="!isAuthUser" class="button__follow" [text]="buttonFollowText">
+    <app-button *ngIf="authUser?._id !== user._id" class="button__follow" [text]="buttonFollowText">
     </app-button>
     <div class="information__user-description">{{ user.description }}</div>
   </div>

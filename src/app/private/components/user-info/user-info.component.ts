@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, Subscription, tap } from 'rxjs';
 
 // Interfaces
@@ -19,7 +19,7 @@ import { UserService } from '../../services/user.service';
 export class UserInfoComponent implements OnInit, OnChanges {
   @Input()
   public user: User | null = null;
-  public isAuthUser: boolean = false;
+  public authUser: User | null = null;
   public avatarSize: Size = Size.xxl;
   public buttonFollowText: string = 'Follow';
   public followersCount: number = 11;
@@ -30,14 +30,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
+    this.route.params.subscribe((p) => console.log(p['id']))
     this.subscriptions.push(
-      this.isAuthUserPage().subscribe(
-        (isAuth: boolean) => (this.isAuthUser = isAuth)
-      )
+      this.authService.user$.subscribe((user: User | null) => this.authUser = user)
     );
   }
 

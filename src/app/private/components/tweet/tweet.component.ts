@@ -4,12 +4,18 @@ import { Subscription, tap } from 'rxjs';
 // Interfaces
 import { LikeI, TweetI } from 'src/app/model/tweet.interface';
 import { User } from 'src/app/model/user.interface';
-import { ButtonAppearance, ButtonSize, Size } from '../../../model/enums';
+import {
+  ButtonAppearance,
+  ButtonSize,
+  Route,
+  Size,
+} from '../../../model/enums';
 
 // Services
 import { UserService } from '../../services/user.service';
 import { TweetService } from '../../services/tweet.service';
 import { AuthService } from 'src/app/public/services/auth.service';
+import { Router } from '@angular/router';
 
 interface ButtonI {
   active: string;
@@ -61,11 +67,13 @@ export class TweetComponent implements OnInit, OnDestroy {
       icon: 'turned_in_not',
     },
   ];
+  private routes: typeof Route = Route;
 
   public constructor(
     private userService: UserService,
     private tweetService: TweetService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   public ngOnInit() {
@@ -109,6 +117,17 @@ export class TweetComponent implements OnInit, OnDestroy {
           .subscribe((user: User) => console.log(user.username))
       );
     }
+  }
+
+  public navigateToUserPage() {
+    this.router.navigate([
+
+        `../private/user-page/${
+          this.recordParentAuthor?._id
+            ? this.recordParentAuthor._id
+            : this.user._id
+        }`,
+    ]);
   }
 
   public trackByFn(index: number, item: string): number {

@@ -1,7 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+
+// Interfaces
 import { User } from 'src/app/model/user.interface';
+
+// Services
 import { AuthService } from 'src/app/public/services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -30,7 +34,6 @@ export class MainComponent implements OnInit, OnDestroy {
             this.authService.user$.subscribe((user: User | null) => {
               if (user) {
                 this.user = user;
-                console.log(user);
                 this.router.navigate([`./private/user-page/${this.user._id}`]);
               }
             })

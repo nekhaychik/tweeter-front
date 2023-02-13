@@ -16,11 +16,13 @@
 .information__wrapper {
   display: grid;
   grid-template-columns: auto auto 1fr 1fr;
+  max-height: 30px;
   margin-left: 20.31px;
   align-items: center;
   column-gap: 25px;
   width: 100%;
   /* align-items: flex-start; */
+  align-items: baseline;
 }
 
 .information__user-name {
@@ -55,7 +57,10 @@
   line-height: 25px;
   letter-spacing: -0.035em;
   color: #828282;
-  height: 100%;
+  word-wrap: break-word;
+  content-visibility: auto;
+  max-height: 75px;
+  overflow-y: scroll;
 }
 
 .button__follow {

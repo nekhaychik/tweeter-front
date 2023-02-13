@@ -27,7 +27,9 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
   public constructor(private tweetService: TweetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.usersIds)
     if (this.usersIds.length > 0) {
+      this.tweets = [];
       this.usersIds.forEach((userId: string) => {
         this.subscriptionList.push(
           this.tweetService

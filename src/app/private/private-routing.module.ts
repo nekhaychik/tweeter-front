@@ -10,14 +10,8 @@ const routes: Routes = [
     component: UserPageComponent,
     children: [
       {
-        path: 'user-page',
+        path: 'user-page/:id',
         component: MainComponent,
-        children: [
-          {
-            path: ':id',
-            component: MainComponent,
-          },
-        ],
       },
       { path: 'home', component: HomeComponent },
     ],
