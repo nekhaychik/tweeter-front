@@ -14,9 +14,9 @@ export class ButtonComponent {
   @Input()
   public text: string = 'Button';
   @Input()
-  public textColor: string = 'color: black;';
+  public textColor: string = 'color: #ffffff;';
   @Input()
   public disabled: boolean = false;
   @Input()
-  public icon: string = 'add';
+  public icon: string = 'person_add';
 }

@@ -4,7 +4,3 @@ span {
   justify-content: center;
   align-items: center;
 }
-
-span:last-child {
-  align-self: flex-end;
-}
