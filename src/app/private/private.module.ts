@@ -36,6 +36,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { ExploreComponent } from './components/explore/explore.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatInputModule } from '@angular/material/input';
     TweetComponent,
     UserPageComponent,
     HomeComponent,
+    ExploreComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,22 @@
+.tweets {
+  margin-top: -127.18px;
+  z-index: -10;
+  padding-top: 155.32px;
+}
+
+.tweets__wrapper {
+  display: flex;
+  width: 1073px;
+  margin: 0 auto;
+  column-gap: 24px;
+}
+
+.tweets__news {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+app-button {
+  margin-bottom: 30px;
+}

@@ -21,12 +21,14 @@ import { TweetService } from '../../services/tweet.service';
 export class TweetsNewsComponent implements OnChanges, OnDestroy {
   @Input()
   public usersIds: string[] = [];
+  @Input()
   public tweets: TweetI[] = [];
   private subscriptionList: Subscription[] = [];
 
   public constructor(private tweetService: TweetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.tweets)
     if (this.usersIds.length > 0) {
       this.tweets = [];
       this.usersIds.forEach((userId: string) => {

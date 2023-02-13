@@ -1,0 +1,30 @@
+<main>
+  <section class="search">
+    <!-- <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+          placeholder="Ex. pat@example.com">
+        <mat-hint>Errors appear instantly!</mat-hint>
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form> -->
+  </section>
+  <section class="tweets">
+    <div class="tweets__wrapper">
+      <app-tweets-menu></app-tweets-menu>
+      <div class="tweets__news">
+        <app-tweets-news [tweets]="tweets"></app-tweets-news>
+        <app-button [text]="isAllTweets ? buttonsSettings[1].text : buttonsSettings[0].text"
+          [icon]="isAllTweets ? buttonsSettings[1].icon : buttonsSettings[0].icon"
+          [disabled]="isAllTweets ? buttonsSettings[1].disabled : buttonsSettings[0].disabled"
+          (click)="load()"></app-button>
+      </div>
+    </div>
+  </section>
+</main>

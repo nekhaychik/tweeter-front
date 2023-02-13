@@ -43,7 +43,7 @@ export class TweetService {
 
   public repostTweet(repostedTweetId: string): Observable<RepostI> {
     const repostTweetUrl: string = this.tweetUrl + `/repost/${repostedTweetId}`;
-    const repostUrl: string = this.repostUrl + `/${repostedTweetId}`
+    const repostUrl: string = this.repostUrl + `/${repostedTweetId}`;
     return this.http.post<TweetI>(repostTweetUrl, null).pipe(
       catchError(
         this.handleError<any>(`repostTweet repostedTweetId=${repostedTweetId}`)
@@ -63,7 +63,7 @@ export class TweetService {
   }
 
   public getTweetById(tweetId: string): Observable<TweetI> {
-    const getTweetUrl: string = this.tweetUrl + `/${tweetId}`;
+    const getTweetUrl: string = this.tweetUrl + `?tweetId=${tweetId}`;
     return this.http
       .get<TweetI>(getTweetUrl)
       .pipe(catchError(this.handleError<any>(`getTweetById id=${tweetId}`)));
@@ -76,6 +76,18 @@ export class TweetService {
       .pipe(
         catchError(this.handleError<any>(`getAllUserTweets userId=${userId}`))
       );
+  }
+
+  public getAllTweets(
+    offset: number = 0,
+    limit: number = 10,
+    keyword: string = ''
+  ): Observable<TweetI[]> {
+    const url: string =
+      this.tweetUrl + `/all?offset=${offset}&limit=${limit}&keyword=${keyword}`;
+    return this.http
+      .get<TweetI[]>(url)
+      .pipe(catchError(this.handleError<any>('getAllTweets', [])));
   }
 
   public getMyTweets(): Observable<TweetI[]> {

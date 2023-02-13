@@ -10,7 +10,7 @@
           (click)="onClick(tabs[0].route)"> {{tabs[0].name}}
         </a>
         <a mat-tab-link (click)="activeTab = tabs[1].name" [active]="activeTab == tabs[1].name"
-          (click)="onClick(tabs[1].route + '/' + user?._id)">
+          (click)="onClick(tabs[1].route)">
           {{tabs[1].name}}
         </a>
         <a mat-tab-link (click)="activeTab = tabs[2].name" [active]="activeTab == tabs[2].name"

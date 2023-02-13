@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     },
     {
       name: 'Explore',
-      route: Route.userPage,
+      route: '../private/explore',
     },
     {
       name: 'Bookmarks',
@@ -57,6 +57,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public onClick(route: string): void {
+    console.log(route)
     this.router.navigate([route]);
   }
 

@@ -17,7 +17,8 @@ export enum ButtonAppearance {
 
 export enum Route {
   home = '../private/home',
-  userPage = '../private/home',
+  userPage = '../private/user-page',
+  explore= '../private/explore',
   signUp = '../sign-up',
   signUpVerify = '../public/sign-up-verify',
   logIn = '../login',
