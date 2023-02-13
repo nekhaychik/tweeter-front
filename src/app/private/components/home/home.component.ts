@@ -72,12 +72,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             }
           }),
           switchMap(() =>
-            this.subscriptionService.getAllUserSubscribers(this.authUser._id)
+            this.subscriptionService.getAllUserSubscriptions(this.authUser._id)
           )
         )
         .subscribe((subscriptions: SubscriptionI[]) => {
           this.userSubscriptions = subscriptions.map(
-            (s: SubscriptionI) => s.subscriberId
+            (s: SubscriptionI) => s.userId
           );
         })
     );

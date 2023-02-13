@@ -114,7 +114,7 @@ export class TweetComponent implements OnInit, OnDestroy {
         this.userService
           .getUserById(this.tweet.parentRecordAuthorId)
           .pipe(tap((user: User) => (this.recordParentAuthor = user)))
-          .subscribe((user: User) => console.log(user.username))
+          .subscribe()
       );
     }
   }
