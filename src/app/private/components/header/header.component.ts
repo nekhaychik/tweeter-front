@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, tap } from 'rxjs';
 
 // Interfaces
 import { HeaderTab } from 'src/app/model/common.interface';
@@ -16,7 +20,7 @@ import { AuthService } from 'src/app/public/services/auth.service';
   styleUrls: ['./header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @Input()
   public user: User | null = null;
   public readonly tabs: HeaderTab[] = [
@@ -26,16 +30,27 @@ export class HeaderComponent {
     },
     {
       name: 'Explore',
-      route: Route.userPage, // change
+      route: Route.userPage,
     },
     {
       name: 'Bookmarks',
-      route: '', // change
+      route: '/book', // change
     },
   ];
-  public activeTab: string = this.tabs[1].name;
+  public activeTab: string = '';
 
   public constructor(private router: Router, public authService: AuthService) {}
+
+  public ngOnInit(): void {
+    this.tabs.forEach((tab: HeaderTab) => {
+      if (
+        this.router.url.includes(
+          tab.route.split('/')[tab.route.split('/').length - 1]
+        )
+      )
+        this.activeTab = tab.name;
+    });
+  }
 
   public trackByFn(index: number, item: HeaderTab): number {
     return index;
