@@ -1,13 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, Subscription, tap } from 'rxjs';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { map, Observable, Subscription } from 'rxjs';
 
 // Interfaces
 import { SubscriptionI, User } from 'src/app/model/user.interface';
@@ -16,8 +8,6 @@ import { Size } from '../../../model/enums';
 // Services
 import { AuthService } from 'src/app/public/services/auth.service';
 import { SubscriptionService } from '../../services/subscription.service';
-import { UserService } from '../../services/user.service';
-import { TweetService } from '../../services/tweet.service';
 
 @Component({
   selector: 'app-user-info',
@@ -37,11 +27,8 @@ export class UserInfoComponent implements OnInit, OnChanges, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   public constructor(
-    private router: Router,
     private authService: AuthService,
-    private userService: UserService,
-    private subscriptionService: SubscriptionService,
-    private tweetService: TweetService
+    private subscriptionService: SubscriptionService
   ) {}
 
   public ngOnInit(): void {
@@ -67,7 +54,7 @@ export class UserInfoComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  public followUserHandler() {
+  public followUserHandler(): void {
     if (this.user)
       this.subscriptions.push(
         this.subscriptionService
@@ -76,7 +63,7 @@ export class UserInfoComponent implements OnInit, OnChanges, OnDestroy {
       );
   }
 
-  public unfollowUserHandler() {
+  public unfollowUserHandler(): void {
     if (this.user)
       this.subscriptions.push(
         this.subscriptionService.unsubscribe(this.user._id).subscribe(() => {

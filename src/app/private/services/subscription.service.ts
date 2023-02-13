@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
+
+// Interfaces & constants
 import { SubscriptionI } from 'src/app/model/user.interface';
+import { StatusI } from 'src/app/model/tweet.interface';
 import { API } from 'src/app/public/constants/constants';
 
 @Injectable({
@@ -37,8 +40,9 @@ export class SubscriptionService {
   }
 
   public subscribe(userId: string): Observable<SubscriptionI> {
+    const url: string = this.subscriptionUrl + `?userId=${userId}`;
     return this.http
-      .post<SubscriptionI>(this.subscriptionUrl + `?userId=${userId}`, null)
+      .post<SubscriptionI>(url, null)
       .pipe(
         catchError(
           this.handleError<SubscriptionI>(`subscribe to user with id=${userId}`)
@@ -46,12 +50,13 @@ export class SubscriptionService {
       );
   }
 
-  public unsubscribe(userId: string) {
+  public unsubscribe(userId: string): Observable<StatusI> {
+    const url: string = this.subscriptionUrl + `?userId=${userId}`;
     return this.http
-      .delete(this.subscriptionUrl + `?userId=${userId}`)
+      .delete<StatusI>(url)
       .pipe(
         catchError(
-          this.handleError<SubscriptionI>(`unsubscribe user with id=${userId}`)
+          this.handleError<StatusI>(`unsubscribe user with id=${userId}`)
         )
       );
   }

@@ -5,7 +5,7 @@ import {
   OnDestroy,
   SimpleChanges,
 } from '@angular/core';
-import { Subscription, switchMap, tap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 // Interfaces
 import { TweetI } from 'src/app/model/tweet.interface';
@@ -27,7 +27,6 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
   public constructor(private tweetService: TweetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.usersIds)
     if (this.usersIds.length > 0) {
       this.tweets = [];
       this.usersIds.forEach((userId: string) => {

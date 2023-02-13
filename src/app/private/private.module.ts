@@ -7,7 +7,6 @@ import { PrivateRoutingModule } from './private-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
-import { SvgImageComponent } from './components/svg-image/svg-image.component';
 import { MainComponent } from './components/main/main.component';
 import { ButtonComponent } from './components/button/button.component';
 import { TweetsMenuComponent } from './components/tweets-menu/tweets-menu.component';
@@ -43,7 +42,6 @@ import { MatInputModule } from '@angular/material/input';
     HeaderComponent,
     LogoComponent,
     AvatarComponent,
-    SvgImageComponent,
     MainComponent,
     UserInfoComponent,
     ButtonComponent,

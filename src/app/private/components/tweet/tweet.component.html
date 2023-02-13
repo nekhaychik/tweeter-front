@@ -1,9 +1,10 @@
-<div class="repost__info" *ngIf="recordParentAuthor"><mat-icon>loop</mat-icon><span>{{ user?.username }}
+<div class="repost__info" *ngIf="recordParentAuthor"><mat-icon>loop</mat-icon><span>{{ user ? user.username : '' }}
     Retweeted</span>
 </div>
 <div class="tweet__wrapper" *ngIf="user">
   <div class="tweet__user-info">
-    <app-avatar class="tweet__user-avatar" [size]="avatarSize" [name]="tweetUserName" (click)="navigateToUserPage()"></app-avatar>
+    <app-avatar class="tweet__user-avatar" [size]="avatarSize" [name]="tweetUserName"
+      (click)="navigateToUserPage()"></app-avatar>
     <p class="tweet__user-name">{{ tweetUserName }}</p>
     <p class="tweet__created-date">{{ dateString }}</p>
   </div>

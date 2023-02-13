@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, switchMap, tap } from 'rxjs';
 
-// Interfaces, constants
+// Interfaces & constants & enums
 import { CreateTweetControls } from 'src/app/model/control.interface';
 import { Size } from 'src/app/model/enums';
 import { SubscriptionI, User } from 'src/app/model/user.interface';
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             isComment: this.isComment.value,
           })
           .pipe()
-          .subscribe((tweet) => {
+          .subscribe(() => {
             this.createTweetForm.reset({
               isComment: this.commentItems[0].value,
             });

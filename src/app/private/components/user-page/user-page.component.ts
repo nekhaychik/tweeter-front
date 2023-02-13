@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
+// Interfaces
 import { User } from 'src/app/model/user.interface';
+
+// Services
 import { AuthService } from 'src/app/public/services/auth.service';
 
 @Component({
@@ -9,6 +13,7 @@ import { AuthService } from 'src/app/public/services/auth.service';
 })
 export class UserPageComponent implements OnInit {
   public authUser!: User;
+
   public constructor(private authService: AuthService) {}
 
   public ngOnInit(): void {

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Interfaces
+// Interfaces & enums
 import { HeaderTab } from 'src/app/model/common.interface';
 import { User } from 'src/app/model/user.interface';
 import { Route } from '../../../model/enums';
@@ -23,7 +23,7 @@ import { AuthService } from 'src/app/public/services/auth.service';
 export class HeaderComponent implements OnInit {
   @Input()
   public user: User | null = null;
-  public readonly tabs: HeaderTab[] = [
+  public tabs: HeaderTab[] = [
     {
       name: 'Home',
       route: Route.home,

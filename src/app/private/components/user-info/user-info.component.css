@@ -21,7 +21,6 @@
   align-items: center;
   column-gap: 25px;
   width: 100%;
-  /* align-items: flex-start; */
   align-items: baseline;
 }
 

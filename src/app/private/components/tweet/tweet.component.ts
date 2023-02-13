@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 
-// Interfaces
-import { LikeI, TweetI } from 'src/app/model/tweet.interface';
+// Interfaces & enums
+import { TweetI } from 'src/app/model/tweet.interface';
 import { User } from 'src/app/model/user.interface';
 import {
   ButtonAppearance,
@@ -15,7 +16,6 @@ import {
 import { UserService } from '../../services/user.service';
 import { TweetService } from '../../services/tweet.service';
 import { AuthService } from 'src/app/public/services/auth.service';
-import { Router } from '@angular/router';
 
 interface ButtonI {
   active: string;
@@ -44,6 +44,7 @@ export class TweetComponent implements OnInit, OnDestroy {
   public unactiveButton: string = 'color: #4F4F4F;';
   public user!: User;
   public recordParentAuthor: User | null = null;
+  public routes: typeof Route = Route;
   private subscriptionList: Subscription[] = [];
   public buttonNames: ButtonI[] = [
     {
@@ -67,7 +68,6 @@ export class TweetComponent implements OnInit, OnDestroy {
       icon: 'turned_in_not',
     },
   ];
-  private routes: typeof Route = Route;
 
   public constructor(
     private userService: UserService,
@@ -76,7 +76,7 @@ export class TweetComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.subscriptionList.push(
       this.authService.user$.subscribe((user: User | null) => {
         if (user) this.authUser = user;
@@ -119,14 +119,13 @@ export class TweetComponent implements OnInit, OnDestroy {
     }
   }
 
-  public navigateToUserPage() {
+  public navigateToUserPage(): void {
     this.router.navigate([
-
-        `../private/user-page/${
-          this.recordParentAuthor?._id
-            ? this.recordParentAuthor._id
-            : this.user._id
-        }`,
+      `${this.routes.userPage}/${
+        this.recordParentAuthor?._id
+          ? this.recordParentAuthor._id
+          : this.user._id
+      }`,
     ]);
   }
 
@@ -146,7 +145,7 @@ export class TweetComponent implements OnInit, OnDestroy {
     return new Date(this.tweet.createdAt).toLocaleString();
   }
 
-  public addStyle(arr: string[], activeStyle: string) {
+  public addStyle(arr: string[], activeStyle: string): string {
     return arr.includes(this.authUser._id) ? activeStyle : this.unactiveButton;
   }
 
@@ -176,7 +175,7 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   private like(): void {
     this.subscriptionList.push(
-      this.tweetService.likeTweet(this.tweet._id).subscribe((like: LikeI) => {
+      this.tweetService.likeTweet(this.tweet._id).subscribe(() => {
         this.usersLikedTweet.push(this.authUser._id);
       })
     );

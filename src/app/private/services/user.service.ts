@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+
+// Interfaces & constants
 import { UpdateUser, User } from 'src/app/model/user.interface';
 import { API } from 'src/app/public/constants/constants';
 
