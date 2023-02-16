@@ -15,6 +15,7 @@ import { TweetsNewsComponent } from './components/tweets-news/tweets-news.compon
 import { TweetComponent } from './components/tweet/tweet.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { HomeComponent } from './components/home/home.component';
+import { ExploreComponent } from './components/explore/explore.component';
 
 import {
   TuiAvatarModule,
@@ -36,7 +37,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { ExploreComponent } from './components/explore/explore.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { ExploreComponent } from './components/explore/explore.component';
     MatInputModule,
     MatButtonModule,
     TuiTextAreaModule,
+    MatGridListModule,
   ],
 })
 export class PrivateModule {}

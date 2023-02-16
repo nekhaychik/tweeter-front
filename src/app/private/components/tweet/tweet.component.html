@@ -11,10 +11,13 @@
   <div *ngIf="tweet.text" class="tweet__text">
     <p>{{ tweet.text }}</p>
   </div>
-  <div *ngIf="tweet.imagesURLs?.length" class="tweet__image-wrapper">
-    <img *ngFor="let image of tweet?.imagesURLs; trackBy: trackByFn" class="tweet__image" [src]="image"
-      alt="User Image">
-  </div>
+  <mat-grid-list class="tweet__image-wrapper" *ngIf="tweet.imagesURLs?.length" [cols]="gridCols"
+    [rowHeight]="gridRowHeight + 'px'">
+    <mat-grid-tile *ngFor="let image of imagesToShow; index as i; trackBy: trackByFn"
+      [colspan]="i === 4 || i === 8 ? 2 : 1" [rowspan]="1">
+      <img class="tweet__image" [src]="image" alt="User Image">
+    </mat-grid-tile>
+  </mat-grid-list>
   <div class="tweet__info">
     <p>{{ usersLikedTweet.length }} likes</p>
     <p>{{ usersRepostedTweet.length }} retweet</p>

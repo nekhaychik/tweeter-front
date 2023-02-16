@@ -69,6 +69,11 @@ export class TweetService {
       .pipe(catchError(this.handleError<any>(`getTweetById id=${tweetId}`)));
   }
 
+  public getImage(filename: string) {
+    const url: string = this.tweetUrl + `/image?filename=${filename}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   public getAllUserTweets(userId: string): Observable<TweetI[]> {
     const getAllTweetsUrl: string = this.tweetUrl + `/all-tweets/${userId}`;
     return this.http

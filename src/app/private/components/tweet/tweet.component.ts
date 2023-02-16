@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 
@@ -23,12 +30,18 @@ interface ButtonI {
   icon: string;
 }
 
+export interface Tile {
+  src: any;
+  cols: number;
+  rows: number;
+}
+
 @Component({
   selector: 'app-tweet',
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.css'],
 })
-export class TweetComponent implements OnInit, OnDestroy {
+export class TweetComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public tweet!: TweetI;
   public usersLikedTweet: string[] = [];
@@ -69,12 +82,33 @@ export class TweetComponent implements OnInit, OnDestroy {
     },
   ];
 
+  public imagesToShow: any[] = [];
+  // public gridRowHeight: number = 0;
+  public cols: number = 0;
+
   public constructor(
     private userService: UserService,
     private tweetService: TweetService,
     private authService: AuthService,
     private router: Router
   ) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (
+      Array.isArray(this.tweet.imagesURLs) &&
+      this.tweet.imagesURLs.length > 0
+    ) {
+      console.log(this.tweet.imagesURLs)
+      this.tweet.imagesURLs.forEach((filename: string, index: number) => {
+        this.subscriptionList.push(
+          this.tweetService
+            .getImage(filename)
+            .pipe(tap((image: Blob) => this.createImageFromBlob(image)))
+            .subscribe(() => {})
+        );
+      });
+    }
+  }
 
   public ngOnInit(): void {
     this.subscriptionList.push(
@@ -119,6 +153,21 @@ export class TweetComponent implements OnInit, OnDestroy {
     }
   }
 
+  private createImageFromBlob(image: Blob): void {
+    let reader: FileReader = new FileReader();
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imagesToShow.push(reader.result);
+      },
+      false
+    );
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
   public navigateToUserPage(): void {
     this.router.navigate([
       `${this.routes.userPage}/${
@@ -131,6 +180,20 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   public trackByFn(index: number, item: string): number {
     return index;
+  }
+
+  public get gridCols(): number {
+    if (this.imagesToShow.length === 1) {
+      return 1;
+    } else {
+      return this.imagesToShow.length % 2 ? 3 : 2;
+    }
+  }
+
+  public get gridRowHeight(): number {
+    if (this.imagesToShow.length < 4) return 375;
+    if (this.imagesToShow.length < 7) return 375 / 2;
+    else return 375 / 3;
   }
 
   public get tweetUserName(): string {
@@ -147,6 +210,10 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   public addStyle(arr: string[], activeStyle: string): string {
     return arr.includes(this.authUser._id) ? activeStyle : this.unactiveButton;
+  }
+
+  public ceil(number: number) {
+    return Math.ceil(number);
   }
 
   public repost(): void {

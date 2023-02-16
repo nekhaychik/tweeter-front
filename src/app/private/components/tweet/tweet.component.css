@@ -68,14 +68,22 @@
 }
 
 .tweet__image-wrapper {
-  width: 100%;
   margin-top: 19px;
   height: fit-content;
+  height: 375px;
+  max-width: 705px;
+  content-visibility: auto;
+  background-color: #f6f6f6;
+  text-align: center;
 }
 
 .tweet__image {
   position: relative;
-  width: 100%;
+}
+
+img {
+  height: inherit;
+  /* width: 100%; */
 }
 
 .tweet__info {
