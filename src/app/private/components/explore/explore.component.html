@@ -1,29 +1,34 @@
 <main>
-  <section class="search">
-    <!-- <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-          placeholder="Ex. pat@example.com">
-        <mat-hint>Errors appear instantly!</mat-hint>
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
+  <!-- <section class="search">
+    <form [formGroup]="searchForm" (ngSubmit)="searchHandler()">
+      <mat-form-field appearance ="outline">
+        <mat-label>Search</mat-label>
+        <input type="text" matInput placeholder="Search" [formControlName]="formControls.search">
       </mat-form-field>
-    </form> -->
-  </section>
+
+      <div class="verify__form-button">
+        <button mat-raised-button type="submit" [disabled]="!searchForm.valid">Search</button>
+      </div>
+    </form>
+  </section> -->
   <section class="tweets">
     <div class="tweets__wrapper">
       <app-tweets-menu></app-tweets-menu>
       <div class="tweets__news">
-        <app-tweets-news [tweets]="tweets"></app-tweets-news>
-        <app-button [text]="isAllTweets ? buttonsSettings[1].text : buttonsSettings[0].text"
-          [icon]="isAllTweets ? buttonsSettings[1].icon : buttonsSettings[0].icon"
-          [disabled]="isAllTweets ? buttonsSettings[1].disabled : buttonsSettings[0].disabled"
-          (click)="load()"></app-button>
+        <ng-container *ngIf="!isSearch">
+          <app-tweets-news [tweets]="tweets"></app-tweets-news>
+          <app-button [text]="isAllTweets ? buttonsSettings[1].text : buttonsSettings[0].text"
+            [icon]="isAllTweets ? buttonsSettings[1].icon : buttonsSettings[0].icon"
+            [disabled]="isAllTweets ? buttonsSettings[1].disabled : buttonsSettings[0].disabled"
+            (click)="load()"></app-button>
+        </ng-container>
+
+        <!-- <ng-template #searchBlock>
+          <app-tweets-news [tweets]="searchTweets"></app-tweets-news>
+          <app-button [text]="isAllSearchTweets ? buttonsSettings[1].text : buttonsSettings[0].text"
+            [icon]="isAllSearchTweets ? buttonsSettings[1].icon : buttonsSettings[0].icon"
+            [disabled]="isAllSearchTweets ? buttonsSettings[1].disabled : buttonsSettings[0].disabled" (click)="load()"></app-button>
+        </ng-template> -->
       </div>
     </div>
   </section>

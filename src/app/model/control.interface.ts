@@ -18,3 +18,7 @@ export enum CreateTweetControls {
   text = 'text',
   isComment = 'isComment',
 }
+
+export enum SearchControls {
+  search = 'search',
+}
