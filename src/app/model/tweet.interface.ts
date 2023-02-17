@@ -17,14 +17,14 @@ export interface LikeI {
 }
 
 export interface RepostI {
-  tweetI: string;
-  userI: string;
+  tweetId: string;
+  userId: string;
   createdAt: string;
 }
 
 export interface SaveI {
-  tweetI: string;
-  userI: string;
+  tweetId: string;
+  userId: string;
   createdAt: string;
 }
 

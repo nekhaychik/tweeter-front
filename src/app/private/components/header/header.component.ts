@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
     },
     {
       name: 'Bookmarks',
-      route: '/book', // change
+      route: Route.bookmarks,
     },
   ];
   public activeTab: string = '';

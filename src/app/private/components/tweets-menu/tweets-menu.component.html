@@ -1,5 +1,8 @@
 <aside class="tweets__menu">
   <nav tuiTabs vertical="right" class="left">
-    <button *ngFor="let item of menuItems; trackBy: trackByFn" tuiTab>{{ item }}</button>
+    <button tuiTab (click)="menuEvent.emit(menuItems[0])">{{ menuItems[0] }}</button>
+    <button tuiTab (click)="menuEvent.emit(menuItems[1])">{{ menuItems[1] }}</button>
+    <button tuiTab (click)="menuEvent.emit(menuItems[2])">{{ menuItems[2] }}</button>
+    <button tuiTab disabled>{{ menuItems[3] }}</button>
   </nav>
 </aside>

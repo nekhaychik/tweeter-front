@@ -16,6 +16,7 @@ import { TweetComponent } from './components/tweet/tweet.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { HomeComponent } from './components/home/home.component';
 import { ExploreComponent } from './components/explore/explore.component';
+import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
 
 import {
   TuiAvatarModule,
@@ -53,6 +54,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     UserPageComponent,
     HomeComponent,
     ExploreComponent,
+    BookmarksComponent,
   ],
   imports: [
     CommonModule,

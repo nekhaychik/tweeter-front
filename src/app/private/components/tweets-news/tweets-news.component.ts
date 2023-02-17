@@ -28,7 +28,6 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
   public constructor(private tweetService: TweetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.tweets)
     if (this.usersIds.length > 0) {
       this.tweets = [];
       this.usersIds.forEach((userId: string) => {
@@ -50,8 +49,11 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public trackByFn(index: number, item: TweetI): number {
-    return index;
+  public removeTweetFromList(tweetId: string): void {
+    const index: number = this.tweets
+      .map((tweet: TweetI) => tweet._id)
+      .indexOf(tweetId);
+    if (typeof index === 'number') this.tweets.splice(index, 1);
   }
 
   public ngOnDestroy(): void {

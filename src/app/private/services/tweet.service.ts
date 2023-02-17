@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 // Interfaces & constants
 import {
@@ -202,6 +202,19 @@ export class TweetService {
       .pipe(
         catchError(this.handleError<any>(`getUsersSavedTweet id=${tweetId}`))
       );
+  }
+
+  public getMySaved(): Observable<string[]> {
+    const url: string = this.saveUrl + '/my-all';
+    return this.http.get<string[]>(url).pipe(
+      catchError(this.handleError<any>(`getMySaved`)),
+      map((saved: SaveI[]) =>
+        saved.reduce((acc: string[], currentSave: SaveI) => {
+          acc.push(currentSave.tweetId);
+          return acc;
+        }, [])
+      )
+    );
   }
 
   public unsave(tweetId: string): Observable<{ status: string }> {

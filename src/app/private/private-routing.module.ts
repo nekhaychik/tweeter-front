@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExploreComponent } from './components/explore/explore.component';
 
 // Components
 import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
+import { BookmarksComponent } from './components/bookmarks/bookmarks.component';
+import { ExploreComponent } from './components/explore/explore.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'explore',
         component: ExploreComponent,
+      },
+      {
+        path: 'bookmarks',
+        component: BookmarksComponent,
       },
     ],
   },

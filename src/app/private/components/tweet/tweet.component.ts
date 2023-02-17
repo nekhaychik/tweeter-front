@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -44,6 +46,8 @@ export interface Tile {
 export class TweetComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public tweet!: TweetI;
+  @Output()
+  public unsaveEvent: EventEmitter<string> = new EventEmitter<string>();
   public usersLikedTweet: string[] = [];
   public usersSavedTweet: string[] = [];
   public usersRepostedTweet: string[] = [];
@@ -98,7 +102,6 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
       Array.isArray(this.tweet.imagesURLs) &&
       this.tweet.imagesURLs.length > 0
     ) {
-      console.log(this.tweet.imagesURLs)
       this.tweet.imagesURLs.forEach((filename: string, index: number) => {
         this.subscriptionList.push(
           this.tweetService
@@ -278,6 +281,7 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
       this.tweetService.unsave(this.tweet._id).subscribe(() => {
         const index: number = this.usersLikedTweet.indexOf(this.authUser._id);
         this.usersSavedTweet.splice(index, 1);
+        this.unsaveEvent.emit(this.tweet._id);
       })
     );
   }

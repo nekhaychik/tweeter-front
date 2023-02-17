@@ -1,0 +1,10 @@
+<main>
+  <section class="tweets">
+    <div class="tweets__wrapper">
+      <app-tweets-menu (menuEvent)="filter($event)"></app-tweets-menu>
+      <div class="tweets__news">
+        <app-tweets-news [tweets]="filteredTweets"></app-tweets-news>
+      </div>
+    </div>
+  </section>
+</main>
