@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/public/services/auth.service';
 })
 export class UserPageComponent implements OnInit {
   public authUser!: User;
+  
 
   public constructor(private authService: AuthService) {}
 

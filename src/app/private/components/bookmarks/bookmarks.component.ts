@@ -14,6 +14,7 @@ import { TweetService } from '../../services/tweet.service';
 })
 export class BookmarksComponent implements OnInit, OnDestroy {
   public filteredTweets: TweetI[] = [];
+  public menuItems: string[] = ['Tweets & replies', 'Tweets', 'Media', 'Likes'];
   private tweets: TweetI[] = [];
   private subscriptions: Subscription[] = [];
 
@@ -51,13 +52,13 @@ export class BookmarksComponent implements OnInit, OnDestroy {
 
   public filter(filterBy: string): void {
     switch (filterBy) {
-      case 'Tweets':
-        this.filteredTweets = this.filterTweets();
-        break;
-      case 'Tweets & replies':
+      case this.menuItems[0]:
         this.filteredTweets = this.filterTweetsAndReplies();
         break;
-      case 'Media':
+      case this.menuItems[1]:
+        this.filteredTweets = this.filterTweets();
+        break;
+      case this.menuItems[2]:
         this.filteredTweets = this.filterMedia();
         break;
     }

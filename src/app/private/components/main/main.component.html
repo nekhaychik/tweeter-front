@@ -4,8 +4,8 @@
   <app-user-info [user]="user"></app-user-info>
   <section class="tweets">
     <div class="tweets__wrapper">
-      <app-tweets-menu></app-tweets-menu>
-      <app-tweets-news *ngIf="user" [usersIds]="[user._id]"></app-tweets-news>
+      <app-tweets-menu [menuItems]="menuItems" (menuEvent)="filter($event)"></app-tweets-menu>
+      <app-tweets-news [tweets]="filteredTweets"></app-tweets-news>
     </div>
   </section>
 </main>

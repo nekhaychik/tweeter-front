@@ -21,5 +21,5 @@ export class ButtonComponent {
   @Input()
   public disabled: boolean = false;
   @Input()
-  public icon: string = 'person_add';
+  public icon: string = '';
 }

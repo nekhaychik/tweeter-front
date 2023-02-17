@@ -6,16 +6,8 @@
     </div>
     <div class="navigation-container">
       <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-        <a mat-tab-link (click)="activeTab = tabs[0].name" [active]="activeTab == tabs[0].name"
-          (click)="onClick(tabs[0].route)"> {{tabs[0].name}}
-        </a>
-        <a mat-tab-link (click)="activeTab = tabs[1].name" [active]="activeTab == tabs[1].name"
-          (click)="onClick(tabs[1].route)">
-          {{tabs[1].name}}
-        </a>
-        <a mat-tab-link (click)="activeTab = tabs[2].name" [active]="activeTab == tabs[2].name"
-          (click)="onClick(tabs[2].route)">
-          {{tabs[2].name}}
+        <a mat-tab-link *ngFor="let tab of tabs; trackBy: trackByFn" (click)="activeTab = tab.name"
+          [active]="activeTab == tab.name" (click)="clickTabHandler(tab.route)"> {{tab.name}}
         </a>
       </nav>
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
@@ -25,11 +17,9 @@
       <p>{{ user.username }}</p>
       <mat-icon [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
       <mat-menu class="avatar__menu" #menu="matMenu">
-        <button mat-menu-item><mat-icon>person</mat-icon>My Profile</button>
-        <button mat-menu-item><mat-icon>group</mat-icon>Group Chat</button>
-        <button mat-menu-item><mat-icon>settings</mat-icon>Settings</button>
-        <button class="button__log-out" (click)="logOut()" mat-menu-item><mat-icon>exit_to_app</mat-icon>Log
-          Out</button>
+        <button *ngFor="let button of menuBattons; trackBy: trackByFn" (click)="clickMenuHandler(button.buttonText)"
+          mat-menu-item><mat-icon>{{ button.icon
+            }}</mat-icon>{{ button.buttonText }}</button>
       </mat-menu>
     </div>
   </div>
