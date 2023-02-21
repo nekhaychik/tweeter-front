@@ -31,19 +31,19 @@ export class BookmarksComponent implements OnInit, OnDestroy {
         tweetsIds.forEach((id: string) =>
           this.subscriptions.push(
             this.tweetService
-              .getTweetById(id)
+              .getTweetWithAmountOfLikes(id)
               .pipe(
                 tap((tweet: TweetI) => {
                   this.tweets.push(tweet);
                 })
               )
-              .subscribe(() =>
+              .subscribe(() => {
                 this.tweets.sort(
                   (a: TweetI, b: TweetI) =>
                     Date.parse(b.createdAt.toString()) -
                     Date.parse(a.createdAt.toString())
-                )
-              )
+                );
+              })
           )
         );
       })
@@ -54,6 +54,7 @@ export class BookmarksComponent implements OnInit, OnDestroy {
     switch (filterBy) {
       case this.menuItems[0]:
         this.filteredTweets = this.filterTweetsAndReplies();
+        console.log(this.tweets);
         break;
       case this.menuItems[1]:
         this.filteredTweets = this.filterTweets();
@@ -61,6 +62,8 @@ export class BookmarksComponent implements OnInit, OnDestroy {
       case this.menuItems[2]:
         this.filteredTweets = this.filterMedia();
         break;
+      case this.menuItems[3]:
+        this.filteredTweets = this.filterLikes();
     }
   }
 
@@ -90,6 +93,21 @@ export class BookmarksComponent implements OnInit, OnDestroy {
           Date.parse(a.createdAt.toString())
       );
   }
+
+  private filterLikes(): TweetI[] {
+    return this.tweets.sort(
+      (a: TweetI, b: TweetI) =>
+        (b.amountOfLikes ? b.amountOfLikes : 0) -
+        (a.amountOfLikes ? a.amountOfLikes : 0)
+    );
+  }
+
+  // public likeHandler(tweetId: string): void {
+  //   const index: number = this.tweets.findIndex((tweet: TweetI) => tweet._id === tweetId);
+  //   if (index > -1) {
+
+  //   }
+  // }
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((s: Subscription) => s.unsubscribe());

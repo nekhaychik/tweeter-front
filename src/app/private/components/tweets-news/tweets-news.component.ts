@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -23,6 +25,10 @@ export class TweetsNewsComponent implements OnChanges, OnDestroy {
   public usersIds: string[] = [];
   @Input()
   public tweets: TweetI[] = [];
+  @Output()
+  public likeEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  public unlikeEvent: EventEmitter<string> = new EventEmitter<string>();
   private subscriptionList: Subscription[] = [];
 
   public constructor(private tweetService: TweetService) {}

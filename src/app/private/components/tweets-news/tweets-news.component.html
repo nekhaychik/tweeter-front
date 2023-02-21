@@ -1,5 +1,6 @@
 <div class="tweets__news">
   <ng-container *ngFor="let tweet of tweets">
-    <app-tweet [tweet]="tweet" (unsaveEvent)="removeTweetFromList($event)"></app-tweet>
+    <app-tweet [tweet]="tweet" (unsaveEvent)="removeTweetFromList($event)" (likeEvent)="likeEvent.emit($event)"
+      (unlikeEvent)="unlikeEvent.emit($event)"></app-tweet>
   </ng-container>
 </div>

@@ -48,6 +48,10 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
   public tweet!: TweetI;
   @Output()
   public unsaveEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  public likeEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output()
+  public unlikeEvent: EventEmitter<string> = new EventEmitter<string>();
   public usersLikedTweet: string[] = [];
   public usersSavedTweet: string[] = [];
   public usersRepostedTweet: string[] = [];
@@ -87,7 +91,6 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
   ];
 
   public imagesToShow: any[] = [];
-  // public gridRowHeight: number = 0;
   public cols: number = 0;
 
   public constructor(
@@ -247,6 +250,7 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptionList.push(
       this.tweetService.likeTweet(this.tweet._id).subscribe(() => {
         this.usersLikedTweet.push(this.authUser._id);
+        this.likeEvent.emit(this.tweet._id);
       })
     );
   }
@@ -256,6 +260,7 @@ export class TweetComponent implements OnInit, OnChanges, OnDestroy {
       this.tweetService.unlike(this.tweet._id).subscribe(() => {
         const index: number = this.usersLikedTweet.indexOf(this.authUser._id);
         this.usersLikedTweet.splice(index, 1);
+        this.unlikeEvent.emit(this.tweet._id);
       })
     );
   }

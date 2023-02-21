@@ -69,6 +69,18 @@ export class TweetService {
       .pipe(catchError(this.handleError<any>(`getTweetById id=${tweetId}`)));
   }
 
+  public getTweetWithAmountOfLikes(tweetId: string): Observable<TweetI> {
+    const getTweetUrl: string = this.tweetUrl + `?tweetId=${tweetId}`;
+    return this.http.get<TweetI>(getTweetUrl).pipe(
+      catchError(this.handleError<any>(`getTweetById id=${tweetId}`)),
+      tap((tweet: TweetI) => {
+        this.getAmountOfTweetLike(tweet._id).subscribe(
+          (amount: number) => (tweet.amountOfLikes = amount)
+        );
+      })
+    );
+  }
+
   public getImage(filename: string) {
     const url: string = this.tweetUrl + `/image?filename=${filename}`;
     return this.http.get(url, { responseType: 'blob' });

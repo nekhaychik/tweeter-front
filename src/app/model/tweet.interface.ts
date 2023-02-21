@@ -8,6 +8,7 @@ export interface TweetI {
   authorId: string;
   parentRecordAuthorId?: string;
   parentRecordId?: string;
+  amountOfLikes?: number;
 }
 
 export interface LikeI {
