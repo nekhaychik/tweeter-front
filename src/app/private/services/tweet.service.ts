@@ -95,6 +95,18 @@ export class TweetService {
       );
   }
 
+  public getAllUserTweetsWithLikes(userId: string): Observable<TweetI[]> {
+    return this.getAllUserTweets(userId).pipe(
+      tap((tweets: TweetI[]) => {
+        tweets.forEach((tweet: TweetI) =>
+          this.getAmountOfTweetLike(tweet._id).subscribe(
+            (amount: number) => (tweet.amountOfLikes = amount)
+          )
+        );
+      })
+    );
+  }
+
   public getAllTweets(
     offset: number = 0,
     limit: number = 10,

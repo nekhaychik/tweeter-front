@@ -51,7 +51,7 @@ export class MainComponent implements OnInit, OnDestroy {
               .pipe(
                 tap((user: User) => (this.user = user)),
                 switchMap((user: User) =>
-                  this.tweetService.getAllUserTweets(user._id)
+                  this.tweetService.getAllUserTweetsWithLikes(user._id)
                 )
               )
               .subscribe((tweets: TweetI[]) => {
@@ -78,6 +78,10 @@ export class MainComponent implements OnInit, OnDestroy {
         break;
       case this.menuItems[2]:
         this.filteredTweets = this.filterMedia();
+        break;
+      case this.menuItems[3]:
+        console.log(this.tweets);
+        this.filteredTweets = this.filterLikes();
         break;
     }
   }
@@ -107,6 +111,14 @@ export class MainComponent implements OnInit, OnDestroy {
           Date.parse(b.createdAt.toString()) -
           Date.parse(a.createdAt.toString())
       );
+  }
+
+  private filterLikes(): TweetI[] {
+    return this.tweets.sort(
+      (a: TweetI, b: TweetI) =>
+        (b.amountOfLikes ? b.amountOfLikes : 0) -
+        (a.amountOfLikes ? a.amountOfLikes : 0)
+    );
   }
 
   public ngOnDestroy(): void {
